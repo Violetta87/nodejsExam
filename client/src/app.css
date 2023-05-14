@@ -1,0 +1,39 @@
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar{
+  background-color: pink;
+  border-radius: 10px;
+}
+.form-group {
+  flex: 1;
+  text-align: center;
+}
+
+.login-signup{
+  margin-left: auto;
+}
+
+.search-input{
+  width: 30vw;
+}
+
+button.btn-outline-success:nth-child(2) {
+  margin-left: 10px;
+}
+
+.nav-link.disabled {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.navbar-brand{
+  font-family:Impact;
+  font-weight: 100;
+  font-size: xx-large;  
+}
+
+a{
+  font-family: Impact;
+}
