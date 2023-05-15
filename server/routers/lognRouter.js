@@ -18,23 +18,34 @@ router.use(session({
 router.post("/login", async (req,res) => {
     try{
         const loginInfo = req.body;
+        console.log(loginInfo)
         
+        //works in postman
         if(!loginInfo.email||!loginInfo.password){
             return res.status(400).send({
                 message: "Information missing",
                 status: 400
             })
         }
-        
+        //works in postman
         const loginFromDatabase = await getUserByEmail(loginInfo.email)
-        console.log(loginFromDatabase, "hej")
         if(!loginFromDatabase){
             return res.status(400).send({
-                message: "Couldnt find user"
+                user:loginInfo.email,
+                message: "Couldnt find user",
+                status:400
             })
         }
-
+        
         const isUserValid = await compare(loginInfo.password, loginFromDatabase.password)
+        
+        if(!isUserValid){
+            return res.status(400).send({
+                user:loginInfo.email,
+                message: "password is not correct",
+                status: 400
+            })
+        }
         
         if(isUserValid){
             req.session.user= loginFromDatabase.email
