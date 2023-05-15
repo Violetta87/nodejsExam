@@ -1,5 +1,6 @@
 <script>
     import { Router, Link, Route } from "svelte-navigator"
+    import Login from "../pages/Login.svelte";
 </script>
 
 <Router>
@@ -39,11 +40,13 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="d-flex login-signup">
-                <button class="btn btn-outline-success">Login</button>
-                <button class="btn btn-outline-success">Signup</button>
+              <button class="btn btn-outline-success"><Link to="/login">Login</Link></button>
+              <button class="btn btn-outline-success"><Link to="/sign-up">Signup</Link></button>
             </div>
           </div>
         </div>
       </nav>
+
+      <Route path="/login" component={Login}></Route>
 </Router>
 
