@@ -5,7 +5,8 @@
     import Auction from "../pages/Auction.svelte";
     import { BASE_URL } from "../store/base_url";
     import { user } from "../store/user";
-  import toastr from "toastr";
+    import toastr from "toastr";
+    import PrivateRoute from "../privateRoutes/PrivateRoute.svelte";
 
     async function logout(){
       const response = await fetch($BASE_URL + "/log-out", {
@@ -60,9 +61,12 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="d-flex login-signup">
-              <button class="btn btn-outline-success"><Link to="/login">SignIn</Link></button>
-              <button class="btn btn-outline-success"><Link to="/sign-up">SignUp</Link></button>
-              <button class="btn btn-outline-success"><Link to="/sign-out">SignOut</Link></button>
+              {#if $user}  <!-- Check if user is logged in -->
+                <button class="btn btn-outline-success" on:click={logout}>SignOut</button>
+              {:else}
+                <button class="btn btn-outline-success"><Link to="/login">SignIn</Link></button>
+                <button class="btn btn-outline-success"><Link to="/sign-up">SignUp</Link></button>
+              {/if}
             </div>
           </div>
         </div>
@@ -70,6 +74,9 @@
 
       <Route path="/login" component={Login}></Route>
       <Route path="/harleys" component={Motorcycles}></Route>
-      <Route path="/auction" component={Auction}></Route>
+      <PrivateRoute path="/auction">
+        <Auction/>
+      </PrivateRoute>
+
 </Router>
 

@@ -167,7 +167,7 @@ router.delete("/delete", async (req,res) => {
 })
 
 
-router.get("/log-out", (req,res) => {
+router.post("/log-out", (req,res) => {
     req.session.destroy(() => {
         res.send({message: "logged out"})
     })

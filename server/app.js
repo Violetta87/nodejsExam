@@ -4,6 +4,10 @@ const app = express();
 //parsing all incoming requests to javascript object from json. 
 app.use(express.json());
 
+//use() sets up the middleware function express.static that serves static files from
+//the given directory; client/dist
+app.use(express.static("../client/dist"))
+
 
 //package that allow to load enviromental variabel from .env file (root directory of the project)
 //storing sensitive data for use in application.

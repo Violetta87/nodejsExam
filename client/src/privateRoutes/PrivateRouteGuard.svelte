@@ -8,7 +8,7 @@
     //state
 
 	$: if (!$user) {
-		navigate("/", {
+		navigate("/login", {
 			state: { from: $location.pathname },
 			replace: true,
 		});

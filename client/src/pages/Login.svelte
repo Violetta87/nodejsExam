@@ -11,10 +11,6 @@
     let password = "";
 
    async function validateLogin(){
-
-    console.log(email, password)
-    console.log($BASE_URL)
-
     const response = await fetch($BASE_URL + "/login", {
         method:"POST",
         headers: { 'Content-Type': 'application/json'},
@@ -36,7 +32,7 @@
         toastr.success(`hiiii ${authenticatedEmail}`);
 
         setTimeout(()=> {
-            const from = ($location.state && $location.state.from) || "/login";
+            const from = ($location.state && $location.state.from) || "/";
 		    navigate(from, { replace: true });
         }, 1000);   
     }else{
