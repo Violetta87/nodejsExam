@@ -12,9 +12,6 @@ import dotenv from "dotenv";
 //so we can access them.
 dotenv.config();
 
-import loginRouter from "./routers/lognRouter.js"
-app.use(loginRouter);
-
 
 //cors() return middleware function that can handle CORS requests
 //app.use - the cors() is added to the express.js applikation (every requests)
@@ -24,6 +21,11 @@ app.use(cors({
     origin: true,
     secret: process.env.CORS_KEY
 }));
+
+import loginRouter from "./routers/lognRouter.js"
+app.use(loginRouter);
+import motorcycleRouter from "./routers/motorcycleRouter.js"
+app.use(motorcycleRouter)
 
 //is Authorized
 //if user is loggin in, next() is called - forstår ikke helt next()
@@ -36,6 +38,8 @@ const isAuthorized = (req,res,next) => {
 }
 //Man bestemmer hvilke routes hvor der skal være authorization.
 //app.use("/", isAuthorized);
+
+
 
 
 

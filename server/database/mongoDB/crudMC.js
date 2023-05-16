@@ -1,4 +1,8 @@
 import db from "./createConnection.js";
 
-const foundMc = await db.motorcycles.find().toArray();
-console.log(foundMc);
+//find
+export async function foundMc(){
+    const harley = await db.motorcycles.find().toArray();
+    console.log(foundMc);
+    return harley;
+}

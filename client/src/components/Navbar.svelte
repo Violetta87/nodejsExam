@@ -1,6 +1,26 @@
 <script>
     import { Router, Link, Route } from "svelte-navigator"
     import Login from "../pages/Login.svelte";
+    import Motorcycles from "../pages/Motorcycles.svelte";
+    import Auction from "../pages/Auction.svelte";
+    import { BASE_URL } from "../store/base_url";
+    import { user } from "../store/user";
+  import toastr from "toastr";
+
+    async function logout(){
+      const response = await fetch($BASE_URL + "/log-out", {
+        method: "POST"
+      })
+      const data = response.json();
+      if(response.status === 200){
+        toastr.success("bye")
+        localStorage.removeItem("user")
+        user.set(null);
+        $user = null;
+      }else{
+        
+      }
+    }
 </script>
 
 <Router>
@@ -16,7 +36,7 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="/">Auktions oversigt</a>
+                <Link to="/auction">Auktion</Link>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">Motorcykler</a>
@@ -28,7 +48,7 @@
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/">BMW</a></li>
                   <li><a class="dropdown-item" href="/">Ducati</a></li>
-                  <li><a class="dropdown-item" href="/">Harley Davidson</a></li>
+                  <li class="dropdown-item"><Link to="/harleys">Harley</Link></li>
                 </ul>
               </li>
               <li class="nav-item">
@@ -40,13 +60,16 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="d-flex login-signup">
-              <button class="btn btn-outline-success"><Link to="/login">Login</Link></button>
-              <button class="btn btn-outline-success"><Link to="/sign-up">Signup</Link></button>
+              <button class="btn btn-outline-success"><Link to="/login">SignIn</Link></button>
+              <button class="btn btn-outline-success"><Link to="/sign-up">SignUp</Link></button>
+              <button class="btn btn-outline-success"><Link to="/sign-out">SignOut</Link></button>
             </div>
           </div>
         </div>
       </nav>
 
       <Route path="/login" component={Login}></Route>
+      <Route path="/harleys" component={Motorcycles}></Route>
+      <Route path="/auction" component={Auction}></Route>
 </Router>
 

@@ -2,22 +2,18 @@
     import { BASE_URL } from "../store/base_url.js";
     import { useNavigate, useLocation } from "svelte-navigator";
     import { user } from "../store/user.js";
+    import toastr from "toastr";
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    let email;
-    let password;
+    let email = "";
+    let password = "";
 
    async function validateLogin(){
-    const options={};
-
-    options.method= "POST"
-    options.headers = { 'Content-Type': 'application/json'}
-    options.body = JSON.stringify({email: email, password: password});
-    options.credentials= "include"
 
     console.log(email, password)
+    console.log($BASE_URL)
 
     const response = await fetch($BASE_URL + "/login", {
         method:"POST",
@@ -37,14 +33,15 @@
         const authenticatedEmail = data.user;
         localStorage.setItem("user", JSON.stringify(data.user))
         user.set(data.user);
-        //toastr.success(`hiiii ${authenticatedEmail}`);
+        toastr.success(`hiiii ${authenticatedEmail}`);
 
         setTimeout(()=> {
             const from = ($location.state && $location.state.from) || "/login";
 		    navigate(from, { replace: true });
         }, 1000);   
     }else{
-        //toastr.error(data.message)
+        toastr.error(data.message)
+        console.log("error")
     }
 }
 
