@@ -9,6 +9,7 @@
 
     let email = "";
     let password = "";
+    let i = 2;
 
    async function validateLogin(){
     const response = await fetch($BASE_URL + "/login", {
@@ -45,25 +46,55 @@
 </script>
 
 <div class="login-form">
-    <h2>Sign In</h2>
-  
-    <form on:submit|preventDefault={validateLogin}>
-      <div class="form-field">
-        <label for="email" class="input-text">Email</label>
-        <input type="text" placeholder="Email" name="email" bind:value={email} required>
-      </div>
-  
-      <div class="form-field">
-        <label for="password" class="input-text">Password</label>
-        <input type="password" placeholder="Password" name="password" bind:value={password} required>
-      </div>
-  
-      <div class="form-field">
-        <button type="submit">Login</button>
-      </div>
-      <div><a href="/">Click here if you want to sign up</a></div>
-    </form>
+  <div class="container">
+    
+    <div id="headlines">
+      <h2>Login</h2>
+      <h2>Sign Up</h2>
+    </div>
+    <label>
+      <input class="range" type="range" bind:value={i} max="1">
+  </label>
   </div>
+  
+  {#if i == 0}
+      <h2>Login</h2>
+      <form on:submit|preventDefault={validateLogin}>
+          <div class="form-field">
+              <label for="email" class="input-text">Email</label>
+              <input type="text" placeholder="Email" name="email" bind:value={email} required>
+          </div>
+      
+          <div class="form-field">
+              <label for="password" class="input-text">Password</label>
+              <input type="password" placeholder="Password" name="password" bind:value={password} required>
+          </div>
+      
+          <div class="form-field">
+              <button type="submit">Login</button>
+          </div>
+          <div><a href="/">Click here if you want to sign up</a></div>
+      </form>
+  {:else}
+      <h2>Sign Up</h2>
+      <form on:submit|preventDefault={validateLogin}>
+          <div class="form-field">
+              <label for="email" class="input-text">Email</label>
+              <input type="text" placeholder="Email" name="email" bind:value={email} required>
+          </div>
+      
+          <div class="form-field">
+              <label for="password" class="input-text">Password</label>
+              <input type="password" placeholder="Password" name="password" bind:value={password} required>
+          </div>
+      
+          <div class="form-field">
+              <button type="submit">Sign Up</button>
+          </div>
+          <div><a href="/">Click here if you want to log in</a></div>
+      </form>
+  {/if}
+</div>
   
   <style>
     .login-form {
@@ -108,6 +139,63 @@
     .login-form{
         background-color: pink;
     }
-  </style>
+
+    /* Custom styling for the range input */
+    input[type="range"] {
+        /* Set the height and width */
+        height: 10px;
+        width: 50%;
+
+        /* Remove default styles */
+        appearance: none;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+
+        /* Adjust track color */
+        background: #ccc;
+        border-radius: 5px;
+
+        /* Adjust thumb appearance */
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        &::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    .container{
+      display: flex;
+      flex-direction: column;
+    }
+
+    #headlines{
+      display: flex;
+      flex-direction: row;
+    }
+
+    .range{
+      align-items: center;
+      align-content: center;
+    }
+
+</style>
+
+
+
   
 

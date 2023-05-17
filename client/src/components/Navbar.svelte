@@ -64,8 +64,7 @@
               {#if $user}  <!-- Check if user is logged in -->
                 <button class="btn btn-outline-success" on:click={logout}>SignOut</button>
               {:else}
-                <button class="btn btn-outline-success"><Link to="/login">SignIn</Link></button>
-                <button class="btn btn-outline-success"><Link to="/sign-up">SignUp</Link></button>
+                <button class="btn btn-outline-success"><Link to="/login">Login</Link></button>
               {/if}
             </div>
           </div>
