@@ -40,10 +40,11 @@ const isAuthorized = (req,res,next) => {
         res.status(400).send("Not logged in")
     }
 }
+
+import profileRouter from "./routers/profileRouter.js"
+app.use(profileRouter)
 //Man bestemmer hvilke routes hvor der skal være authorization.
-//app.use("/", isAuthorized);
-
-
+app.use("/profile-info", isAuthorized);
 
 
 

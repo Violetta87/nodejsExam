@@ -20,6 +20,17 @@ await db.exec(`CREATE TABLE IF NOT EXISTS login (
     password TEXT
 );`);
 
+//DDL profile
+await db.exec(`CREATE TABLE IF NOT EXISTS profile(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstname TEXT,
+    lastname TEXT,
+    tlf INTEGER,
+    address TEXT,
+    login_id INTEGER NOT NULL,
+    FOREIGn KEY (login_id) REFERENCES login (id)
+)`)
+
 //bcryp admin login
 const adminPasswordHashed = await bcryptConverter(process.env.ADMIN_PASSWORD)
 const adminEmail = process.env.ADMIN_EMAIL;
@@ -29,3 +40,8 @@ const adminName = process.env.ADMIN_NAME;
 await db.run(`INSERT INTO login (username, email, password) VALUES (?,?,?)`, [adminName, adminEmail, adminPasswordHashed])
 const data = await db.all(`SELECT * FROM login`)
 console.log(data)
+
+//DML for testing
+await db.run(`INSERT INTO profile (firstname, lastname, tlf, address, login_id) VALUES (?,?,?,?,?)`, ["tina", "hansen", 28282828, "christian svendsensgade 5.3, 2300", 1])
+const newdata= await db.all(`SELECT * FROM profile`)
+console.log(newdata)

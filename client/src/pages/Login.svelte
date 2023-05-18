@@ -102,7 +102,7 @@ async function handleSignup(){
           <div class="form-field">
               <button type="submit">Login</button>
           </div>
-          <div><a href="/">Click here if you want to sign up</a></div>
+          <div><a href="/">Forgot Password</a></div>
       </form>
   {:else}
       <h2>Sign Up</h2>
@@ -129,7 +129,6 @@ async function handleSignup(){
           <div class="form-field">
               <button type="submit">Sign Up</button>
           </div>
-          <div><a href="/">Click here if you want to log in</a></div>
       </form>
   {/if}
 </div>
