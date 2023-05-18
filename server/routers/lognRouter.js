@@ -48,9 +48,10 @@ router.post("/login", async (req,res) => {
         }
         
         if(isUserValid){
-            req.session.user= loginFromDatabase.email
+            const { password, username, email, ...userNoPassword } = user; 
+            req.session.user= userNoPassword;
             return res.status(200).send({
-                user: loginFromDatabase.email,
+                user: userNoPassword,
                 message: "user found",
                 status:200
             })

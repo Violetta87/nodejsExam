@@ -7,6 +7,7 @@
     import { user } from "../store/user";
     import toastr from "toastr";
     import PrivateRoute from "../privateRoutes/PrivateRoute.svelte";
+    import Profile from "../pages/Profile.svelte"
 
     async function logout(){
       const response = await fetch($BASE_URL + "/log-out", {
@@ -34,7 +35,7 @@
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+                <Link to="/profile">Profile</Link>
               </li>
               <li class="nav-item">
                 <Link to="/auction">Auktion</Link>
@@ -75,6 +76,9 @@
       <Route path="/harleys" component={Motorcycles}></Route>
       <PrivateRoute path="/auction">
         <Auction/>
+      </PrivateRoute>
+      <PrivateRoute path="/profile">
+        <Profile/>
       </PrivateRoute>
 
 </Router>
