@@ -9,7 +9,9 @@
 
     let email = "";
     let password = "";
-    let i = 2;
+    let i = 0;
+    let username= "";
+    let passwordReperat="";
 
    async function validateLogin(){
     const response = await fetch($BASE_URL + "/login", {
@@ -40,6 +42,33 @@
         toastr.error(data.message)
         console.log("error")
     }
+}
+
+
+async function handleSignup(){
+
+  try{
+    if(password===passwordReperat){
+      const response = await fetch($BASE_URL + "/sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({username: username, email: email, password: password}),
+      credentials: "include"
+    })
+
+    const data = await response.json();
+    if(response.status === 200){
+      toastr.success(data.message);
+      setTimeout(() => {
+        i=0
+      },1000)
+    }
+
+  }
+
+  }catch(error){
+    console.log(error)
+  }
 }
 
 
@@ -77,7 +106,11 @@
       </form>
   {:else}
       <h2>Sign Up</h2>
-      <form on:submit|preventDefault={validateLogin}>
+      <form on:submit|preventDefault={handleSignup}>
+          <div class="form-field">
+            <label for="text" class="input-text">Username</label>
+            <input type="text" placeholder="Email" name="email" bind:value={username} required>
+          </div>
           <div class="form-field">
               <label for="email" class="input-text">Email</label>
               <input type="text" placeholder="Email" name="email" bind:value={email} required>
@@ -87,6 +120,11 @@
               <label for="password" class="input-text">Password</label>
               <input type="password" placeholder="Password" name="password" bind:value={password} required>
           </div>
+          <div class="form-field">
+            <label for="password" class="input-text">Repeat password</label>
+            <input type="password" placeholder="Password" name="password" bind:value={passwordReperat} required>
+        </div>
+
       
           <div class="form-field">
               <button type="submit">Sign Up</button>
@@ -98,7 +136,7 @@
   
   <style>
     .login-form {
-      max-width: 400px;
+      max-width:600px;
       margin: 0 auto;
       padding: 20px;
       border: 1px solid #ccc;
@@ -118,7 +156,7 @@
   
     .form-field input[type="text"],
     .form-field input[type="password"] {
-      width: 100%;
+      width: 80%;
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 3px;
