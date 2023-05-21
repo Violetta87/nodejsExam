@@ -26,6 +26,19 @@ app.use(cors({
     secret: process.env.CORS_KEY
 }));
 
+import session from "express-session";
+app.use(session({
+    secret: process.env.SESSION_KEY,
+    resave: false, //session key should not be saved on every request
+    saveUninitialized: true,
+    cookie: {
+        httpOnly:true,
+        secure: false,
+        sameSite: true
+    } //session created for anomonous user if not modified.
+}));
+
+
 import loginRouter from "./routers/lognRouter.js"
 app.use(loginRouter);
 import motorcycleRouter from "./routers/motorcycleRouter.js"

@@ -6,13 +6,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { compare } from "bcrypt";
 
-import session from "express-session";
 import { bcryptConverter } from "../database/bcrypt.js";
-router.use(session({
-    secret: process.env.SESSION_KEY,
-    resave: false, //session key should not be saved on every request
-    saveUninitialized: true //session created for anomonous user if not modified.
-}));
+
 
 //validate user and login, and sends the validated email back.
 router.post("/login", async (req,res) => {
@@ -49,7 +44,10 @@ router.post("/login", async (req,res) => {
 
         
         if(isUserValid){
+            req.session.isLoggedIn = true;
+            req.session.email = loginInfo.email
             return res.status(200).send({
+                isLoggedIn: true,
                 user: loginInfo.email,
                 message: "user found",
                 status:200
