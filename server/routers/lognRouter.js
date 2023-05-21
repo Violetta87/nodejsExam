@@ -46,12 +46,11 @@ router.post("/login", async (req,res) => {
                 status: 400
             })
         }
+
         
         if(isUserValid){
-            const { password, username, email, ...userNoPassword } = user; 
-            req.session.user= userNoPassword;
             return res.status(200).send({
-                user: userNoPassword,
+                user: loginInfo.email,
                 message: "user found",
                 status:200
             })
@@ -86,6 +85,7 @@ router.post("/sign-up", async (req,res) => {
 
         if(createUserResult.changes === 1){
             const createdUser = await getUserByEmail(createUserinput.email);
+            console.log(createdUser)
             return res.status(200).send({
                 user: createdUser.email,
                 message: "User was created Succesfully",

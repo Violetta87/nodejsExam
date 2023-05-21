@@ -1,6 +1,7 @@
 import { Router } from "express";
 const router = Router();
-import { createProfileInfo, getProfileInfo } from "../database/sqlite/crudProfile.js";
+import { createProfileInfo, getProfileInfo, getProfileInfoByEmail } from "../database/sqlite/crudProfile.js";
+
 
 import dotenv from "dotenv"
 dotenv.config();
@@ -41,10 +42,30 @@ router.post("/profile-info", async (req,res) =>{
     }
     
 });
-
+//get all
 router.get("/profile-info", async (req,res) => {
     const result = await getProfileInfo();
     res.send({result})
+})
+
+router.post("/profile-info-by-email", async (req,res) =>{
+    try{
+        const userEmail = req.body;
+        console.log(userEmail)
+        const info = await getProfileInfoByEmail(userEmail)
+        return res.status(200).send({
+            user: info,
+            message:"User has succesfully updated the profile info",
+            status: 200
+        })
+    }
+catch(error){
+    res.status(500).send({
+        message: "Internal server error" + error.message,
+        status: 500
+    })
+}
+
 })
 
 export default router;

@@ -20,4 +20,10 @@ export async function getProfileInfo(){
     return result;
 }
 
+export async function getProfileInfoByEmail(email){
+    const sql = `SELECT profile.* FROM profile JOIN login ON profile.login_id = login.id WHERE login.email=?`;
+    const result = await db.all(sql, [email]);
+    return result;
+}
+
 
