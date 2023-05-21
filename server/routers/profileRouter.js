@@ -35,7 +35,7 @@ router.get("/profile-info", async (req,res) => {
     res.send({result})
 })
 
-router.post("/profile-info-by-email", async (req,res) =>{
+router.get("/profile-info-by-email", async (req,res) =>{
     try{
         if(!req.session.isLoggedIn){
             return res.status(400).send({
@@ -43,10 +43,10 @@ router.post("/profile-info-by-email", async (req,res) =>{
                 status: 400
             })
         }else{
-            const info = await getProfileInfoByEmail(userEmail)
+            const info = await getProfileInfoByEmail(req.session.email)
             return res.status(200).send({
                 user: info,
-                message:"User has succesfully updated the profile info",
+                message:"User has already succesfully updated the profile info",
                 status: 200
             })
         }

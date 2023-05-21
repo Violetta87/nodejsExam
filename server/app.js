@@ -58,6 +58,7 @@ import profileRouter from "./routers/profileRouter.js"
 app.use(profileRouter)
 //Man bestemmer hvilke routes hvor der skal være authorization.
 app.use("/profile-info", isAuthorized);
+app.use("/profile-info-by-email", isAuthorized);
 
 
 
