@@ -45,6 +45,7 @@ router.get("/profile-info-by-email", async (req,res) =>{
             })
         }else{
             const info = await getProfileInfoByEmail(req.session.email)
+            console.log(info)
             return res.status(200).send({
                 user: info,
                 message:"User has already succesfully updated the profile info",

@@ -2,32 +2,30 @@
     import { user } from "../store/user.js"
     import { BASE_URL } from "../store/base_url.js";
     import toastr from "toastr";
-    import { onMount } from "svelte";
+    //import { onMount } from "svelte";
 
+    //dynamic variable
     let firstname="";
     let lastname="";
     let tlf="";
     let address="";
-    let checker = 0;
-
-   
+    let checker;
 
     async function isThereProfileInfo(){
-    const response = await fetch($BASE_URL + "/profile-info-by-email");
+    const response = await fetch($BASE_URL + "/profile-info-by-email", {credentials: "include"});
     const data = await response.json();
     console.log(data, "hej")
-
-            if(!data){
-               checker=0;
-
-            }else{
-                checker=1;
-                firstname = data.firstname;
-                lastname = data.lastname;
-                tlf = data.tlf;
-                address = data.address;
-            }
+    if(response.status === 200){
+        firstname = data.user[0].firstname;
+        console.log(firstname, "second firstname")
+        lastname = data.user[0].lastname;
+        tlf = data.user[0].tlf;
+        address = data.user[0].address;
+        checker=1;
+    }else{
+        console.log(data.message);
     }
+}
 
     
 
@@ -71,7 +69,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile</h4>
                 </div>
-                {#if checker===0}
+                {#if checker !=1}
                 <form on:submit|preventDefault={addInfoProfile}>
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="first name" bind:value={firstname} required></div>
@@ -85,11 +83,10 @@
                     </div>
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                 </form>
-                {/if}
-                {#if checker}
+                {:else}
                 <form on:submit|preventDefault={isThereProfileInfo}>
                     <div class="row mt-2">
-                        <div class="col-md-6"><h2>Firstname: {firstname}</h2><div class="form-control"></div>
+                        <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="firstname" bind:value={firstname}></div>
                         <div class="col-md-6"><label class="labels">Lastname</label><input type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
                     </div>
                     <div class="row mt-3">

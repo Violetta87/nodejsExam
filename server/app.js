@@ -46,11 +46,10 @@ import profileRouter from "./routers/profileRouter.js"
 //is Authorized
 //if user is loggin in, next() is called - forstår ikke helt next()
 const isAuthorized = (req,res,next) => {
-    if(req.session.isLoggedIn){
-        next();
-    }else{
+    if(!req.session.isLoggedIn){
         res.status(401).send({message: "Not logged in"})
     }
+        next();
 }
 //Man bestemmer hvilke routes hvor der skal være authorization.
 app.use("/profile-info", isAuthorized);

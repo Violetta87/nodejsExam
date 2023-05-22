@@ -13,7 +13,6 @@
       const response = await fetch($BASE_URL + "/log-out", {
         method: "POST"
       })
-      const data = response.json();
       if(response.status === 200){
         toastr.success("bye")
         localStorage.removeItem("user")
