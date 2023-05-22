@@ -37,9 +37,8 @@ router.get("/profile-info", async (req,res) => {
 
 router.get("/profile-info-by-email", async (req,res) =>{
     try{
-        console.log("REQ", req)
-        console.log("req.session", req.session)
         if(!req.session.isLoggedIn){
+            console.log(req.session.isLoggedIn)
             return res.status(400).send({
                 message: "unauthorized",
                 status: 400

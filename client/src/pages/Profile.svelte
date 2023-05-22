@@ -2,6 +2,7 @@
     import { user } from "../store/user.js"
     import { BASE_URL } from "../store/base_url.js";
     import toastr from "toastr";
+    import { onMount } from "svelte";
 
     let firstname="";
     let lastname="";

@@ -40,25 +40,25 @@ app.use(session({
 
 
 import loginRouter from "./routers/lognRouter.js"
-app.use(loginRouter);
 import motorcycleRouter from "./routers/motorcycleRouter.js"
-app.use(motorcycleRouter)
+import profileRouter from "./routers/profileRouter.js"
 
 //is Authorized
 //if user is loggin in, next() is called - forstår ikke helt next()
 const isAuthorized = (req,res,next) => {
-    if(req.session.user){
+    if(req.session.isLoggedIn){
         next();
     }else{
-        res.status(400).send("Not logged in")
+        res.status(401).send({message: "Not logged in"})
     }
 }
-
-import profileRouter from "./routers/profileRouter.js"
-app.use(profileRouter)
 //Man bestemmer hvilke routes hvor der skal være authorization.
 app.use("/profile-info", isAuthorized);
 app.use("/profile-info-by-email", isAuthorized);
+app.use(profileRouter)
+app.use(motorcycleRouter)
+app.use(loginRouter);
+
 
 
 
