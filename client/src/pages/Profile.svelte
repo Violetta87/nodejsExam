@@ -39,7 +39,7 @@
                 credentials: "include"
             })
             const data = await response.json();
-            console.log(data)
+            
             if(response.status ===200){
                 toastr.success(data.message);
                 setTimeout(()=> {
@@ -48,7 +48,7 @@
                     tlf="";
                     address="";
                 },1000)
-                await isThereProfileInfo();
+                //await isThereProfileInfo();
             }  
         } 
         catch(error){

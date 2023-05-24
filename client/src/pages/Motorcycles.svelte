@@ -12,7 +12,6 @@
             console.log(data)
             console.log(data.allMC[0].model)
 
-            
             return data;
         }
         catch(error){
