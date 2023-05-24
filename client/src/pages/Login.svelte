@@ -14,20 +14,20 @@
     let passwordReperat="";
 
    async function validateLogin(){
-    const response = await fetch($BASE_URL + "/login", {
+    try{
+      const response = await fetch($BASE_URL + "/login", {
         method:"POST",
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({email: email, password: password}),
         credentials: "include"
     });
-    console.log(response)
-   
     //parser det til javascript object
     const data = await response.json();
+    //status error virker ikke
+    if(data.status===404){
+      toastr.error("email does not exists.")
+    }
 
-    console.log(data)
-
-    
     if(data.status===200){
         const authenticatedEmail = data.user;
         localStorage.setItem("user", JSON.stringify(data.user))
@@ -39,10 +39,12 @@
 		    navigate(from, { replace: true });
         email="";
         password="";
-        }, 1000);   
-    }else{
-        toastr.error(data.message)
-        console.log("error")
+        }, 1000);  
+
+    }
+  }
+    catch{
+      toastr.error("Something went wrong")
     }
 }
 

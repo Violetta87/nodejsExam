@@ -13,8 +13,7 @@ import { bcryptConverter } from "../database/bcrypt.js";
 router.post("/login", async (req,res) => {
     try{
         const loginInfo = req.body;
-        console.log(loginInfo)
-        
+
         //works in postman
         if(!loginInfo.email||!loginInfo.password){
             return res.status(400).send({
@@ -25,10 +24,10 @@ router.post("/login", async (req,res) => {
         //works in postman
         const loginFromDatabase = await getUserByEmail(loginInfo.email)
         if(!loginFromDatabase){
-            return res.status(400).send({
+            return res.status(404).send({
                 user:loginInfo.email,
                 message: "Couldnt find user",
-                status:400
+                status:404
             })
         }
         

@@ -2,7 +2,7 @@
     import { user } from "../store/user.js"
     import { BASE_URL } from "../store/base_url.js";
     import toastr from "toastr";
-    import { onMount } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
     //import { onMount } from "svelte";
 
     //dynamic variable
@@ -48,6 +48,7 @@
                     tlf="";
                     address="";
                 },1000)
+                await isThereProfileInfo();
             }  
         } 
         catch(error){
@@ -55,10 +56,17 @@
         }
     }
     //check if there is profile information.
-   isThereProfileInfo();
-    
 
-    
+    onMount( async() =>{
+        await isThereProfileInfo();
+    })
+
+    afterUpdate( async() =>{
+        if(checker){
+            await isThereProfileInfo();
+        }
+    })
+   
 </script>
 
 <div class="container rounded bg-white mt-5 mb-5">
