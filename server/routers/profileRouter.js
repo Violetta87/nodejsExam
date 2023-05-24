@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { createProfileInfo, getProfileInfo, getProfileInfoByEmail } from "../database/sqlite/crudProfile.js";
+import { createProfileInfo, getProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail } from "../database/sqlite/crudProfile.js";
 
 
 import dotenv from "dotenv"
@@ -14,14 +14,30 @@ router.post("/profile-info", async (req,res) =>{
                 message:"unauthorized",
                 status:400
             })
-        }else{
-            await createProfileInfo(firstname, lastname, tlf, address, req.session.email);
+        }
+        const info = await getProfileInfoByEmail(req.session.email)
+        console.log(info, "henter og checker info")
+        if(info.id){
+            return res.status(400).send({
+                user: req.session.email,
+                message: "User has already provided information",
+                status: 400
+
+            })
+        }
+        const { firstname, lastname, tlf, address } = req.body;
+        const loginId = await getLoginIdFromEmail(req.session.email);
+        const createdProfileInfo = await createProfileInfo(firstname, lastname, tlf, address, loginId);
+        if(createdProfileInfo.changes === 1){
+            const createdInfo = await getProfileInfoByEmail(req.session.email);
             return res.status(200).send({
-                message: "information created",
+                user: createdInfo.firstname,
+                message: "Profile info was created succesfully",
                 status: 200
             })
         }
     }catch(error){
+        console.log('Error: ' + error)
         res.status(500).send({
             message:"Internal server error" + error.message,
             status:500
@@ -45,7 +61,7 @@ router.get("/profile-info-by-email", async (req,res) =>{
             })
         }else{
             const info = await getProfileInfoByEmail(req.session.email)
-            console.log(info)
+            console.log(info.firstname)
             return res.status(200).send({
                 user: info,
                 message:"User has already succesfully updated the profile info",

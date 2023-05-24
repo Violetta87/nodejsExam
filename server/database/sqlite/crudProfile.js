@@ -1,13 +1,26 @@
 import db from "./connectionSQLITE.js";
 
+//get login id from provided email
+export async function getLoginIdFromEmail(email){
+    try{
+        const sql = `SELECT id FROM login WHERE email=?`;
+        const result = await db.get(sql, [email]);
+        return result;
+    } catch(error){
+        console.log(error);
+        throw error;
+    }
+}
+
 //create - virker den i post man 
 export async function createProfileInfo(firstname, lastname, tlf, address, loginId){
+    console.log('test')
     try{
         const sql = `INSERT INTO profile(firstname, lastname, tlf, address, login_id) VALUES (?,?,?,?,?)`
-        const result = await db.run(sql, [firstname, lastname, tlf, address, loginId])
+        const result = await db.run(sql, [firstname, lastname, tlf, address, loginId.id])
         return result
     }
-    catch{
+    catch(error){
         console.log(error)
         throw error
     }

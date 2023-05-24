@@ -2,6 +2,7 @@
     import { user } from "../store/user.js"
     import { BASE_URL } from "../store/base_url.js";
     import toastr from "toastr";
+    import { onMount } from "svelte";
     //import { onMount } from "svelte";
 
     //dynamic variable
@@ -54,7 +55,8 @@
         }
     }
     //check if there is profile information.
-    isThereProfileInfo();
+   isThereProfileInfo();
+    
 
     
 </script>
@@ -72,7 +74,7 @@
                 {#if checker !=1}
                 <form on:submit|preventDefault={addInfoProfile}>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="first name" bind:value={firstname} required></div>
+                        <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
                         <div class="col-md-6"><label class="labels">Lastname</label><input type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
                     </div>
                     <div class="row mt-3">

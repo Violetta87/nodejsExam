@@ -79,8 +79,6 @@ router.post("/sign-up", async (req,res) => {
         }
         
         const createUserResult = await createUser(createUserinput.username, createUserinput.email, createUserinput.password)
-        console.log(createUserResult)
-
         if(createUserResult.changes === 1){
             const createdUser = await getUserByEmail(createUserinput.email);
             console.log(createdUser)

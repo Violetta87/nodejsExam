@@ -21,7 +21,10 @@
         }  
 
     }
-    onMount(getMCs);
+    onMount(()=> {
+        getMCs();
+    })
+
 </script>
 
 
@@ -34,7 +37,7 @@
         <div class="card-body">
           <h5 class="card-title">{data.allMC[0].model}</h5>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go the auction</a>
+          <a href="/auction" class="btn btn-primary">Go the auction</a>
         </div>
     </div>
     {/if}
