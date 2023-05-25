@@ -2,12 +2,13 @@
     import { Router, Link, Route } from "svelte-navigator"
     import Login from "../pages/Login.svelte";
     import Motorcycles from "../pages/Motorcycles.svelte";
-    import Auction from "../pages/Auction.svelte";
+    import Auction from "../pages/Email.svelte";
     import { BASE_URL } from "../store/base_url";
     import { user } from "../store/user";
     import toastr from "toastr";
     import PrivateRoute from "../privateRoutes/PrivateRoute.svelte";
     import Profile from "../pages/Profile.svelte"
+    import ChatForum from "../pages/ChatForum.svelte";
 
     async function logout(){
       const response = await fetch($BASE_URL + "/log-out", {
@@ -53,7 +54,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="/">Forum</a>
+                <a class="nav-link" href="/chat-forum">chat Forum</a>
               </li>
             </ul>
             <form class="d-flex form-group" role="search">
@@ -73,6 +74,7 @@
 
       <Route path="/login" component={Login}></Route>
       <Route path="/harleys" component={Motorcycles}></Route>
+      <Route path="/chat-forum" component={ChatForum}></Route>
       <PrivateRoute path="/auction">
         <Auction/>
       </PrivateRoute>

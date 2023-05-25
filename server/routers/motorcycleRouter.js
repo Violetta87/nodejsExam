@@ -1,7 +1,6 @@
 import Router from "express";
 const router = Router();
 
-//import session from "express-session"
 import { foundMc } from "../database/mongoDB/crudMC.js";
 
 

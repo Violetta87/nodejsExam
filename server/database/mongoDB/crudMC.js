@@ -6,3 +6,7 @@ export async function foundMc(){
     console.log(foundMc);
     return harley;
 }
+
+export async function createMC(){
+    const createdMC = db.motorcycles.insertOne({})
+}

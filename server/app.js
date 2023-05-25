@@ -38,6 +38,25 @@ app.use(session({
     } //session created for anomonous user if not modified.
 }));
 
+import http from "http"
+const server = http.createServer(app);
+
+//socket
+import { Server } from "socket.io"
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["*"]
+    }
+});
+
+io.on('connection', (socket)=>{
+    socket.on("newMessage", (data) => {
+        console.log("data: ", data)
+        io.emit("messagesRecieved", data)
+    })
+})
+
 
 import loginRouter from "./routers/lognRouter.js"
 import motorcycleRouter from "./routers/motorcycleRouter.js"
@@ -63,7 +82,7 @@ app.use(loginRouter);
 
 const PORT = 3000;
 
-app.listen(PORT,(error) => {
+server.listen(PORT,(error) => {
     if(error) {
         console.log(error)
 }

@@ -44,12 +44,14 @@ router.post("/login", async (req,res) => {
         
         if(isUserValid){
             req.session.isLoggedIn = true;
-            req.session.email = loginInfo.email
+            req.session.email = loginInfo.email;
+            req.session.username = loginInfo.username;
             return res.status(200).send({
                 isLoggedIn: true,
                 user: loginInfo.email,
+                username: loginInfo.username,
                 message: "user found",
-                status:200
+                status:200,
             })
         }
 
