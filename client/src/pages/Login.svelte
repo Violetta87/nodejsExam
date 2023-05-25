@@ -1,7 +1,7 @@
 <script>
     import { BASE_URL } from "../store/base_url.js";
     import { useNavigate, useLocation } from "svelte-navigator";
-    import { user } from "../store/user.js";
+    import { user, userN } from "../store/user.js";
     import toastr from "toastr";
 
     const navigate = useNavigate();
@@ -32,7 +32,10 @@
     if(data.status===200){
         const authenticatedEmail = data.user;
         localStorage.setItem("user", JSON.stringify(data.user))
+        localStorage.setItem("username", JSON.stringify(data.username))
         user.set(data.user);
+        userN.set(data.username);
+        console.log(data.username)
         toastr.success(`hiiii ${authenticatedEmail}`);
 
         setTimeout(()=> {

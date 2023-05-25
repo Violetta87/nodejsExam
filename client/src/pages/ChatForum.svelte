@@ -1,22 +1,24 @@
 <script>
     import { onMount } from 'svelte';
     import { BASE_URL } from '../store/base_url.js';
-    import { user } from '../store/user.js';
+    import { user, userN } from '../store/user.js';
     import { messages } from '../store/forum.js';
     import io from "socket.io-client";
 
     let socket;
+    console.log($userN)
   
     let newMessage = '';
   
     function sendMessage(){
-        socket.emit("newMessage", {user: $user, message: newMessage})
+        socket.emit("newMessage", {username: $userN, message: newMessage})
     }
     onMount(() => {
         socket = io("http://localhost:3000");
         socket.on("messagesRecieved",(data) => {
             messages.update(messagesList => {
                 messagesList.push(data)
+                console.log(data)
                 return messagesList;
             })
         });
@@ -28,7 +30,7 @@
     <h1>ChatForum</h1>
     <div class="chat-forum">
         {#each $messages as message}
-        <div>{message.user}</div>
+        <div>{message.username}</div>
           <div class="message">{message.message}</div>
         {/each}
       

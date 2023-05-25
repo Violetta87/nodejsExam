@@ -23,6 +23,7 @@ router.post("/login", async (req,res) => {
         }
         //works in postman
         const loginFromDatabase = await getUserByEmail(loginInfo.email)
+        console.log(loginFromDatabase)
         if(!loginFromDatabase){
             return res.status(404).send({
                 user:loginInfo.email,
@@ -35,7 +36,7 @@ router.post("/login", async (req,res) => {
         
         if(!isUserValid){
             return res.status(400).send({
-                user:loginInfo.email,
+                user:loginFromDatabase.email,
                 message: "password is not correct",
                 status: 400
             })
@@ -45,11 +46,11 @@ router.post("/login", async (req,res) => {
         if(isUserValid){
             req.session.isLoggedIn = true;
             req.session.email = loginInfo.email;
-            req.session.username = loginInfo.username;
+            req.session.username = loginFromDatabase.username;
             return res.status(200).send({
                 isLoggedIn: true,
                 user: loginInfo.email,
-                username: loginInfo.username,
+                username: loginFromDatabase.username,
                 message: "user found",
                 status:200,
             })

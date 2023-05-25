@@ -62,7 +62,7 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="d-flex login-signup">
-              {#if $user}  <!-- Check if user is logged in -->
+              {#if $user}
                 <button class="btn btn-outline-success" on:click={logout}>SignOut</button>
               {:else}
                 <button class="btn btn-outline-success"><Link to="/login">Login</Link></button>
