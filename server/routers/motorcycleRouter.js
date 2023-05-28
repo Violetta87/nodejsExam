@@ -28,7 +28,7 @@ router.post("/create-motorcycles", async (req,res) =>{
 });
 
 //update motorcycles
-router.put("/update-motorcycles/:id", async (req,res) => {
+router.put("/update-motorcycle/:id", async (req,res) => {
     const id = req.params.id;
     const updatedMotorcycle = req.body
     try{
