@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { createProfileInfo, getProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail } from "../database/sqlite/crudProfile.js";
+import { createProfileInfo, getProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail } from "../database/sqlite/crudProfile.js"
 
 
 import dotenv from "dotenv"

@@ -10,7 +10,7 @@
     let year = "";
     let engine = "";
     let power = "";
-    let weight = "";
+    let weigth = "";
     let minimum_price = "";
     let type = "";
     let owner = $user;
@@ -41,16 +41,15 @@
         year = motorcycle.year;
         engine = motorcycle.engine;
         power = motorcycle.power;
-        weight = motorcycle.weight;
+        weigth = motorcycle.weigth;
         minimum_price = motorcycle.minimum_price;
+        type = motorcycle.type;
     }
 
     async function handleUpdate(id){
-
-        console.log(manifacturer, "before try")
         try{
             const updateMotorcycle = {
-                manifacturer, model,year,engine,power,weight,minimum_price, type
+                manifacturer,model,year,engine,power,weigth,minimum_price,type
             }
 
             const response = await fetch($BASE_URL + "/update-motorcycle/" + id, {
@@ -60,14 +59,11 @@
                 credentials: "include"
             });
 
-            console.log(updateMotorcycle, "AFTER FETCH")
-
-            if(response.ok){
-                location.reload();
-            }
         }catch(error){
             console.log(error)
         }
+
+        location.reload();
     }
 </script>
   
@@ -82,21 +78,21 @@
                 <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Model:</h5>
-                    <input type="text" class="form-control" bind:value={motorcycle.model} required>
+                    <input type="text" class="form-control" bind:value={model} required>
                     <p class="card-text">Manifacturer:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.manifacturer} required>
+                    <input type="text" class="form-control" bind:value={manifacturer} required>
                     <p class="card-text">Year:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.year} required>
+                    <input type="text" class="form-control" bind:value={year} required>
                     <p class="card-text">Engine:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.engine} required>
+                    <input type="text" class="form-control" bind:value={engine} required>
                     <p class="card-text">Power:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.power} required>
+                    <input type="text" class="form-control" bind:value={power} required>
                     <p class="card-text">Weight:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.weight} required>
+                    <input type="text" class="form-control" bind:value={weigth} required>
                     <p class="card-text">Minimum Price:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.minimum_price} required>
+                    <input type="text" class="form-control" bind:value={minimum_price} required>
                     <p class="card-text">Owned by:</p>
-                    <input type="text" class="form-control" bind:value={motorcycle.owner} required>
+                    <input type="text" class="form-control" bind:value={owner} required>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit">submit update</button>
                         <button class="btn btn-primary">Delete</button>
@@ -113,7 +109,7 @@
             <p class="card-text">Year: {motorcycle.year}</p>
             <p class="card-text">Engine: {motorcycle.engine}</p>
             <p class="card-text">Power: {motorcycle.power}</p>
-            <p class="card-text">Weight: {motorcycle.weight}</p>
+            <p class="card-text">Weight: {motorcycle.weigth}</p>
             <p class="card-text">Minimum Price: {motorcycle.minimum_price}</p>
             <p class="card-text">Owned by: {motorcycle.owner}</p>
             {#if $user === motorcycle.owner}
@@ -132,9 +128,6 @@
 </div>
 
 <CreateForm/>
-
-
-
 
 
 <style>

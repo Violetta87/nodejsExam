@@ -6,7 +6,6 @@ import { foundMc, createMC, updateMC } from "../database/mongoDB/crudMC.js";
 //get all motorcycles
 router.get("/motorcycles", async(req,res) => {
     const allMC = await foundMc()
-    console.log(allMC)
     res.send({allMC})
 })
 
@@ -14,7 +13,6 @@ router.get("/motorcycles", async(req,res) => {
 router.post("/create-motorcycles", async (req,res) =>{
     try{
         const createdMotorcycle = await createMC(req.body);
-        console.log(createdMotorcycle, hej)
         res.status(200).send({
             Motorcycle: req.body,
             message:"Motorcycle has been created",
@@ -31,8 +29,11 @@ router.post("/create-motorcycles", async (req,res) =>{
 router.put("/update-motorcycle/:id", async (req,res) => {
     const id = req.params.id;
     const updatedMotorcycle = req.body
+
+    console.log(updatedMotorcycle, "kommer der input")
     try{
         const result = await updateMC(id, updatedMotorcycle);
+        console.log(result)
         res.status(200).send({
             Motorcycle: result,
             message: "Motorcycle has been updated",

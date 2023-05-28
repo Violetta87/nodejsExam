@@ -14,10 +14,9 @@ export async function foundMc(){
 
 //update
 export async function updateMC(id, updateData){
-    const updatedMC = await db.motorcycles.findOneAndUpdate(
+    const updatedMC = await db.motorcycles.updateOne(
         {_id: id},
-        {$set: updateData},
-        {returnDocument: "after"}
+        {$set: updateData}
     );
     return updatedMC;
 }
