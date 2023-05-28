@@ -43,14 +43,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">Motorcykler</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/">Yamaha</a></li>
-                  <li><a class="dropdown-item" href="/">Suzuki</a></li>
-                  <li><a class="dropdown-item" href="/">Kawasaki</a></li>
-                  <li><a class="dropdown-item" href="/">Honda</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/">BMW</a></li>
-                  <li><a class="dropdown-item" href="/">Ducati</a></li>
-                  <li class="dropdown-item"><Link to="/harleys">Harley</Link></li>
+                  <li class="dropdown-item"><Link to="/motorcycles">Motorcycles for sale</Link></li>
                 </ul>
               </li>
               <li class="nav-item">
@@ -73,7 +66,7 @@
       </nav>
 
       <Route path="/login" component={Login}></Route>
-      <Route path="/harleys" component={Motorcycles}></Route>
+      <Route path="/motorcycles" component={Motorcycles}></Route>
       <Route path="/chat-forum" component={ChatForum}></Route>
       <PrivateRoute path="/auction">
         <Auction/>
