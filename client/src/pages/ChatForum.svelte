@@ -1,40 +1,61 @@
 <script>
-    import { onMount } from 'svelte';
+    import { afterUpdate, onMount } from 'svelte';
     import { BASE_URL } from '../store/base_url.js';
     import { user, userN } from '../store/user.js';
     import { messages } from '../store/forum.js';
     import io from "socket.io-client";
 
     let socket;
-    console.log($userN)
-  
     let newMessage = '';
-  
+    let chatForumContainer;
+    let dayAndTime;
+
+    function messageDate(){
+      const currentDate = new Date();
+      const dayOfWeek = currentDate.toLocaleDateString('en',{weekday: 'long'})
+      const hours = currentDate.getHours();
+      const minutes = currentDate.getMinutes().toLocaleString('en', { minimumIntegerDigits:2 });
+      const forMattedDate = `${dayOfWeek}, ${hours}:${minutes}`
+      return forMattedDate;
+    }
+
     function sendMessage(){
-        socket.emit("newMessage", {username: $userN, message: newMessage})
+      const dayAndTime = messageDate();
+      socket.emit("newMessage", {username: $userN, message: newMessage, dayAndTime: dayAndTime})
     }
     onMount(() => {
         socket = io("http://localhost:3000");
         socket.on("messagesRecieved",(data) => {
             messages.update(messagesList => {
                 messagesList.push(data)
-                console.log(data)
                 return messagesList;
             })
         });
     });
 
+    afterUpdate(()=>{
+      chatForumContainer.scrollTo({top: chatForumContainer.scrollHeight, behavior: "smooth"});
+    })
+
 </script>
 
 <div class="body-container">
     <h1>ChatForum</h1>
-    <div class="chat-forum">
+    <div class="chat-forum" bind:this={chatForumContainer}>
         {#each $messages as message}
-        <div>{message.username}</div>
-          <div class="message">{message.message}</div>
+        <div class="message-container">
+          <div class="message-bubble {message.username === $userN ? 'current-user': ''}">
+            <div class="username">{message.username}</div>
+            <div class="message-content">{message.message}</div>
+          </div>
+          <div class="message-meta-container">
+            <span class="day-and-time">{message.dayAndTime}</span>
+          </div>
+        </div>
         {/each}
-      
-        <div class="message-input">
+      </div>
+      <div class="message-input">
+        <div class="input-container">
           <input type="text" bind:value={newMessage} placeholder="Type your message..." />
           <button on:click={sendMessage}>Send</button>
         </div>
@@ -42,10 +63,66 @@
 </div>
   
   <style>
+
+  .body-container{
+    height:70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  
+  .chat-forum {
+      flex:1;
+      display: flex;
+      flex-direction: column;
+      width: 50vw;
+      padding: 10px;
+      border: 2px solid pink;
+      border-radius: 10px;
+      overflow-y: auto;
+    }
+
+    .message-container{
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+  
+    .message-bubble {
+      display: flex;
+      flex-direction: column;
+      max-width: 100vw;
+      margin-bottom: 5px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+    }
+  
+    .message-bubble.current-user {
+      align-self: flex-end;
+      background-color: blue;
+      color: #fff;
+    }
+  
+    .username {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .input-container{
+      display:flex;
+      align-items: flex-end;
+      width: 100%;
+      margin: 2%;
+    }
   
     .message-input {
       display: flex;
-      margin-top: 20px;
+      margin-top: auto;
+      justify-content: flex-end;
+      width: 50vw;
+      background: pink;
+      border-radius: 10px;
     }
   
     .message-input input {
@@ -66,6 +143,14 @@
       cursor: pointer;
       margin-left: 10px;
     }
+
+    .message-meta-container{
+      display: flex;
+      justify-content: flex-end;
+      font-size: 12px;
+      color: #888;
+    }
   </style>
-  
+
+
   

@@ -10,6 +10,7 @@
     let weight = "";
     let minimum_price = "";
     let type = "";
+    let owner=$user;
 
     async function handleCreateMc(){
         const response = await fetch($BASE_URL + "/create-motorcycles", {
