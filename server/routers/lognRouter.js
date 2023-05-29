@@ -83,7 +83,6 @@ router.post("/sign-up", async (req,res) => {
         const createUserResult = await createUser(createUserinput.username, createUserinput.email, createUserinput.password)
         if(createUserResult.changes === 1){
             const createdUser = await getUserByEmail(createUserinput.email);
-            console.log(createdUser)
             return res.status(200).send({
                 user: createdUser.email,
                 message: "User was created Succesfully",
@@ -137,7 +136,7 @@ router.put("/forgot-password", async (req,res) => {
 })
 
 //works in postman
-router.delete("/delete", async (req,res) => {
+router.delete("/delete/:id", async (req,res) => {
     try{
         const userToBeDeleted = req.body
         const findUser = await getUserByEmail(userToBeDeleted.email)
