@@ -129,7 +129,7 @@
       flex: 1;
       padding: 10px;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       font-size: 14px;
     }
   
@@ -172,6 +172,7 @@
       align-self: flex-end;
       background-color: blue;
       color: #fff;
+      
     }
 
     .message-text-container .username{
