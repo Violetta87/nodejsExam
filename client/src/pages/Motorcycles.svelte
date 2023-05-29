@@ -65,6 +65,26 @@
 
         location.reload();
     }
+
+    async function handleDelete(id){
+        const confirmed = window.confirm("Are you sure you want to delete this Motorcycle?")
+        if(!confirmed){
+            return
+        }
+        try{
+            const response = await fetch($BASE_URL + "/delete-motorcycle/" + id, {
+                method: "DELETE"
+            });
+            if(response.ok){
+                console.log(`Motorcycle with id ${id} was deleted`)
+            }
+
+        }catch(error){
+            console.error("ERROR has occured while trying to delete motorcycle:", error)
+        }
+        location.reload();
+
+    }
 </script>
   
 
@@ -95,7 +115,7 @@
                     <input type="text" class="form-control" bind:value={owner} required>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit">submit update</button>
-                        <button class="btn btn-primary">Delete</button>
+                        <button class="btn btn-primary" type="button" on:click|preventDefault={()=> {handleDelete(motorcycle._id)}}>Delete</button>
                     </div>
                 </div>
             </form>
@@ -115,7 +135,7 @@
             {#if $user === motorcycle.owner}
                 <div class="button-container">
                     <button class="btn btn-primary" type="button" on:click={() => {handleUpdateButtonClick(motorcycle)}}>Update</button>
-                    <button class="btn btn-primary">Delete</button>
+                    <button class="btn btn-primary" type="button" on:click|preventDefault={()=> {handleDelete(motorcycle._id)}}>Delete</button>
                 </div>
             {:else}
             <a href="/auction" class="btn btn-primary">Send Email</a>
