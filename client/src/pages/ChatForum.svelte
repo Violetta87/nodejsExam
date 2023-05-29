@@ -22,6 +22,7 @@
     function sendMessage(){
       const dayAndTime = messageDate();
       socket.emit("newMessage", {username: $userN, message: newMessage, dayAndTime: dayAndTime})
+      newMessage='';
     }
     onMount(() => {
         socket = io("http://localhost:3000");
@@ -44,12 +45,14 @@
     <div class="chat-forum" bind:this={chatForumContainer}>
         {#each $messages as message}
         <div class="message-container">
-          <div class="message-bubble {message.username === $userN ? 'current-user': ''}">
-            <div class="username">{message.username}</div>
-            <div class="message-content">{message.message}</div>
-          </div>
-          <div class="message-meta-container">
-            <span class="day-and-time">{message.dayAndTime}</span>
+          <div class="message-bubble {message.username === $userN ? 'current-user': 'received-user'}">
+            <div class="message-text-container {message.username === $userN ? 'current-user': 'received-user'}">
+              <div class="username">{message.username}</div>
+              <div class="message-content">{message.message}</div>
+            </div>
+            <div class="message-meta-container">
+              <span class="day-and-time">{message.dayAndTime}</span>
+            </div>
           </div>
         </div>
         {/each}
@@ -92,16 +95,13 @@
       display: flex;
       flex-direction: column;
       max-width: 100vw;
-      margin-bottom: 5px;
-      padding: 10px;
-      border-radius: 10px;
-      background-color: #f0f0f0;
     }
-  
-    .message-bubble.current-user {
+
+    .message-bubble.current-user{
       align-self: flex-end;
-      background-color: blue;
-      color: #fff;
+    }
+    .message-bubble.received-user{
+      align-self: flex-start;
     }
   
     .username {
@@ -150,6 +150,39 @@
       font-size: 12px;
       color: #888;
     }
+
+    .message-text-container{
+      display: flex;
+      flex-direction: column;
+      max-width: 100vw;
+      margin-bottom: 5px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+    }
+
+    .message-text-container.received-user{
+      align-self: flex-start;
+      background-color: lightgray;
+      color:#000;
+      
+    }
+
+    .message-text-container.current-user{
+      align-self: flex-end;
+      background-color: blue;
+      color: #fff;
+    }
+
+    .message-text-container .username{
+      font-weight: bold;
+      margin-bottom:5px;
+    }
+
+    .message-text-container .message-content{
+      margin-bottom: 5px;
+    }
+
   </style>
 
 
