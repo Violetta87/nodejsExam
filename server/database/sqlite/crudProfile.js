@@ -26,18 +26,42 @@ export async function createProfileInfo(firstname, lastname, tlf, address, login
     }
 }
 
-//for testing postman
-export async function getProfileInfo(){
-    const sql = `SELECT * FROM profile`;
-    const result = await db.all(sql)
-    return result;
-}
-
 export async function getProfileInfoByEmail(email){
     const sql = `SELECT profile.* FROM profile JOIN login ON profile.login_id = login.id WHERE login.email=?`;
     const result = await db.all(sql, [email]);
     console.log(result)
     return result;
+}
+
+export async function getProfileById(id){
+    try{
+        const sql = `SELECT * FROM profile WHERE id=?`;
+        const result = await db.get(sql,[id]);
+        if(result){
+            return result;
+        }else{
+            return null;
+        }
+    }catch{
+        console.error("Error fetching profileinformation with id: ", error);
+        throw error;
+    }
+}
+
+export async function updateProfile(id, firstname, lastname, tlf, address){
+    try{
+        const sql = `UPDATE profile SET firstname=?, lastname=?, tlf=?, address=? WHERE id=?`;
+        const result = await db.run(sql, [firstname,lastname,tlf,address,id]);
+        if(result.changes > 0){
+            const updatedProfile = await getProfileById(id)
+            return updatedProfile;
+        }else{
+            return console.log("couldnt fetch the profile by id")
+        }
+    }catch(error){
+        console.error("Error updating profile: ", error)
+        throw error;
+    }
 }
 
 

@@ -9,20 +9,23 @@
     let tlf="";
     let address="";
     let hasProfileInfo;
+    let profileId;
 
     async function isThereProfileInfo(){
         try{
             const response = await fetch($BASE_URL + "/api/profile-info-by-email", {credentials: "include"});
-            const data = await response.json();
+            const profileInfo = await response.json();
+            console.log(profileInfo)
 
             if(response.status === 200){
-            firstname = data.user[0].firstname;
-            lastname = data.user[0].lastname;
-            tlf = data.user[0].tlf;
-            address = data.user[0].address;
+            firstname = profileInfo.user[0].firstname;
+            lastname = profileInfo.user[0].lastname;
+            tlf = profileInfo.user[0].tlf;
+            address = profileInfo.user[0].address;
             hasProfileInfo=1;
+            profileId = profileInfo.user[0].id
             }else{
-            console.log(data.message);
+            console.log(profileInfo.message);
             }
         }catch(error){
             console.error("Error fetching profile info:", error);
@@ -59,12 +62,14 @@
 
     async function updateProfileInfo(){
         try{
-            const response = await fetch($BASE_URL + "/api/update-profile", {
+            const updatedProfile = {
+                firstname, lastname, tlf, address
+            }
+
+            const response = await fetch($BASE_URL + "/api/update-profile" + profileId, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    firstname: first
-                }),
+                body: JSON.stringify(updatedProfile),
                 credentials: "include"
             })
         }catch(error){
@@ -89,7 +94,7 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"></span><span class="text-black-50">{$user}</span><span> </span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" alt="profile-foto" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"></span><span class="text-black-50">{$user}</span><span> </span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">

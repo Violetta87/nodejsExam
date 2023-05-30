@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { createProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail } from "../database/sqlite/crudProfile.js"
+import { createProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail, updateProfile, getProfileById } from "../database/sqlite/crudProfile.js"
 import { errorHandler, handleClientError } from "../middleware/handlingErrors.js";
 
 import dotenv from "dotenv"
@@ -35,14 +35,37 @@ router.post("/api/profile-info", errorHandler(async (req,res) =>{
 router.get("/api/profile-info-by-email", errorHandler(async (req,res) =>{
         if(!req.session.isLoggedIn){
             return handleClientError(res,"unauthorized", 403)
-        }else{
-            const info = await getProfileInfoByEmail(req.session.email)
+        }
+        const info = await getProfileInfoByEmail(req.session.email)
+        if(info.ok){
             return res.status(200).send({
                 user: info,
                 message:"User has already succesfully updated the profile info",
                 status: 200
             })
         }
+}));
+
+router.put("/api/update-profile/:id", errorHandler(async (req,res) =>{
+        if(!req.session.isLoggedIn){
+            return handleClientError(res,"unauthorized", 403)
+        }
+        const id = req.params.id;
+        const updateProfileInfo = req.body;
+        const { firstname, lastname, tlf, address } = updateProfileInfo;
+        if(!id && !updateProfileInfo){
+            return handleClientError(res,"Either id or profile Information is missing",400)
+        }
+        const info = await updateProfile(id, firstname, lastname, tlf, address)
+        if(info.ok){
+            return res.status(200).send({
+                user: info.firstname,
+                message:`${info.firstname} has been changed succesfully`,
+                status:200
+            })
+
+        }
+
 }));
 
 export default router;

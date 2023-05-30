@@ -30,7 +30,6 @@ router.put("/update-motorcycle/:id", async (req,res) => {
     const id = req.params.id;
     const updatedMotorcycle = req.body
 
-    console.log(updatedMotorcycle, "kommer der input")
     try{
         const result = await updateMotorcycle(id, updatedMotorcycle);
         res.status(200).send({
