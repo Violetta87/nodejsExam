@@ -29,7 +29,6 @@ export async function createProfileInfo(firstname, lastname, tlf, address, login
 export async function getProfileInfoByEmail(email){
     const sql = `SELECT profile.* FROM profile JOIN login ON profile.login_id = login.id WHERE login.email=?`;
     const result = await db.all(sql, [email]);
-    console.log(result)
     return result;
 }
 

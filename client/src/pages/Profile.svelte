@@ -16,6 +16,7 @@
             const response = await fetch($BASE_URL + "/api/profile-info-by-email", {credentials: "include"});
             const profileInfo = await response.json();
             console.log(profileInfo)
+            console.log(profileInfo)
 
             if(response.status === 200){
             firstname = profileInfo.user[0].firstname;
@@ -55,7 +56,6 @@
             }  
         } 
         catch(error){
-            console.error("Error saving profile information", error);
             toastr.error("Failed to save profile information.", error)
         }
     }

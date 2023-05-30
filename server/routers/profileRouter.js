@@ -37,7 +37,8 @@ router.get("/api/profile-info-by-email", errorHandler(async (req,res) =>{
             return handleClientError(res,"unauthorized", 403)
         }
         const info = await getProfileInfoByEmail(req.session.email)
-        if(info.ok){
+        
+        if(info){
             return res.status(200).send({
                 user: info,
                 message:"User has already succesfully updated the profile info",
@@ -51,13 +52,13 @@ router.put("/api/update-profile/:id", errorHandler(async (req,res) =>{
             return handleClientError(res,"unauthorized", 403)
         }
         const id = req.params.id;
-        const updateProfileInfo = req.body;
-        const { firstname, lastname, tlf, address } = updateProfileInfo;
-        if(!id && !updateProfileInfo){
+        const infoProfile = req.body;
+        const { firstname, lastname, tlf, address } = infoProfile;
+        if(!id && !infoProfile){
             return handleClientError(res,"Either id or profile Information is missing",400)
         }
         const info = await updateProfile(id, firstname, lastname, tlf, address)
-        if(info.ok){
+        if(info){
             return res.status(200).send({
                 user: info.firstname,
                 message:`${info.firstname} has been changed succesfully`,
@@ -65,7 +66,6 @@ router.put("/api/update-profile/:id", errorHandler(async (req,res) =>{
             })
 
         }
-
 }));
 
 export default router;
