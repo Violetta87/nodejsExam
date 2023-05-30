@@ -24,8 +24,9 @@
       socket.emit("newMessage", {username: $userN, message: newMessage, dayAndTime: dayAndTime})
       newMessage='';
     }
+
     onMount(() => {
-        socket = io("http://localhost:3000");
+        socket = io($BASE_URL);
         socket.on("messagesRecieved",(data) => {
             messages.update(messagesList => {
                 messagesList.push(data)

@@ -1,24 +1,11 @@
 import express from "express";
-//instanziate
 const app = express();
-//parsing all incoming requests to javascript object from json. 
 app.use(express.json());
-
-//use() sets up the middleware function express.static that serves static files from
-//the given directory; client/dist
 app.use(express.static("../client/dist"))
 
-
-//package that allow to load enviromental variabel from .env file (root directory of the project)
-//storing sensitive data for use in application.
 import dotenv from "dotenv";
-//reads content of .env file and sets process.env object to what variable is written in the file. 
-//so we can access them.
 dotenv.config();
 
-
-//cors() return middleware function that can handle CORS requests
-//app.use - the cors() is added to the express.js applikation (every requests)
 import cors from "cors";
 app.use(cors({
     credentials: true,
@@ -29,19 +16,20 @@ app.use(cors({
 import session from "express-session";
 app.use(session({
     secret: process.env.SESSION_KEY,
-    resave: false, //session key should not be saved on every request
+    resave: false, 
     saveUninitialized: true,
     cookie: {
         httpOnly:true,
         secure: false,
         sameSite: true
-    } //session created for anomonous user if not modified.
+    }
 }));
 
+//for creating HTTP server
 import http from "http"
 const server = http.createServer(app);
 
-//socket
+//creates Socker.io instance
 import { Server } from "socket.io"
 const io = new Server(server, {
     cors: {
@@ -50,6 +38,7 @@ const io = new Server(server, {
     }
 });
 
+//eventhandler for socket connections
 io.on('connection', (socket)=>{
     socket.on("newMessage", (data) => {
         console.log("data: ", data)
@@ -57,31 +46,22 @@ io.on('connection', (socket)=>{
     })
 })
 
+import { checkAuthorization } from "./middleware/checkAuthorization.js";
 
+//Routes
 import loginRouter from "./routers/lognRouter.js"
 import motorcycleRouter from "./routers/motorcycleRouter.js"
 import profileRouter from "./routers/profileRouter.js"
 
-//is Authorized
-//if user is loggin in, next() is called - forstår ikke helt next()
-const isAuthorized = (req,res,next) => {
-    if(!req.session.isLoggedIn){
-        res.status(401).send({message: "Not logged in"})
-    }else{
-        next();
-    }
-}
-//Man bestemmer hvilke routes hvor der skal være authorization.
-app.use("/profile-info", isAuthorized);
-app.use("/profile-info-by-email", isAuthorized);
+//Seperates which routes needs to authorized before access
+app.use("/api/profile-info", checkAuthorization);
+app.use("/api/profile-info-by-email", checkAuthorization);
 app.use(profileRouter)
 app.use(motorcycleRouter)
 app.use(loginRouter);
 
 
-
-
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 
 server.listen(PORT,(error) => {
     if(error) {

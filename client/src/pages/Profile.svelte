@@ -3,7 +3,6 @@
     import { BASE_URL } from "../store/base_url.js";
     import toastr from "toastr";
     import { afterUpdate, onMount } from "svelte";
-    //import { onMount } from "svelte";
 
     //dynamic variable
     let firstname="";
@@ -13,9 +12,8 @@
     let checker;
 
     async function isThereProfileInfo(){
-    const response = await fetch($BASE_URL + "/profile-info-by-email", {credentials: "include"});
+    const response = await fetch($BASE_URL + "/api/profile-info-by-email", {credentials: "include"});
     const data = await response.json();
-    console.log(data, "hej")
     if(response.status === 200){
         firstname = data.user[0].firstname;
         console.log(firstname, "second firstname")
@@ -32,7 +30,7 @@
 
     async function addInfoProfile(){
         try{
-            const response = await fetch($BASE_URL + "/profile-info", {
+            const response = await fetch($BASE_URL + "/api/profile-info", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({firstname: firstname, lastname: lastname, tlf: tlf, address: address}),
@@ -48,15 +46,12 @@
                     tlf="";
                     address="";
                 },1000)
-                //await isThereProfileInfo();
             }  
         } 
         catch(error){
             toastr.error("Something went wrong.", error)
         }
     }
-    //check if there is profile information.
-
     onMount( async() =>{
         await isThereProfileInfo();
     })
