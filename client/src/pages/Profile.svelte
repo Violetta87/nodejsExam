@@ -4,29 +4,32 @@
     import toastr from "toastr";
     import { afterUpdate, onMount } from "svelte";
 
-    //dynamic variable
     let firstname="";
     let lastname="";
     let tlf="";
     let address="";
-    let checker;
+    let hasProfileInfo;
 
     async function isThereProfileInfo(){
-    const response = await fetch($BASE_URL + "/api/profile-info-by-email", {credentials: "include"});
-    const data = await response.json();
-    if(response.status === 200){
-        firstname = data.user[0].firstname;
-        console.log(firstname, "second firstname")
-        lastname = data.user[0].lastname;
-        tlf = data.user[0].tlf;
-        address = data.user[0].address;
-        checker=1;
-    }else{
-        console.log(data.message);
-    }
-}
+        try{
+            const response = await fetch($BASE_URL + "/api/profile-info-by-email", {credentials: "include"});
+            const data = await response.json();
 
-    
+            if(response.status === 200){
+            firstname = data.user[0].firstname;
+            lastname = data.user[0].lastname;
+            tlf = data.user[0].tlf;
+            address = data.user[0].address;
+            hasProfileInfo=1;
+            }else{
+            console.log(data.message);
+            }
+        }catch(error){
+            console.error("Error fetching profile info:", error);
+            toastr.error("Failed to fetch the profile info")
+
+        }
+    }
 
     async function addInfoProfile(){
         try{
@@ -49,15 +52,34 @@
             }  
         } 
         catch(error){
-            toastr.error("Something went wrong.", error)
+            console.error("Error saving profile information", error);
+            toastr.error("Failed to save profile information.", error)
         }
     }
+
+    async function updateProfileInfo(){
+        try{
+            const response = await fetch($BASE_URL + "/api/update-profile", {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    firstname: first
+                }),
+                credentials: "include"
+            })
+        }catch(error){
+            console.error("Error updating profile information:", error);
+            toastr.error("Failed to update profile information: ", error);
+        }
+    }
+
+
     onMount( async() =>{
         await isThereProfileInfo();
     })
 
     afterUpdate( async() =>{
-        if(checker){
+        if(hasProfileInfo){
             await isThereProfileInfo();
         }
     })
@@ -74,29 +96,29 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile</h4>
                 </div>
-                {#if checker !=1}
+                {#if hasProfileInfo !=1}
                 <form on:submit|preventDefault={addInfoProfile}>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
-                        <div class="col-md-6"><label class="labels">Lastname</label><input type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
+                        <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
+                        <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
-                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
+                        <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
+                        <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
                     </div>
                     <div class="row mt-3">
                     </div>
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                 </form>
                 {:else}
-                <form on:submit|preventDefault={isThereProfileInfo}>
+                <form on:submit|preventDefault={updateProfileInfo}>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Firstname</label><input type="text" class="form-control" placeholder="firstname" bind:value={firstname}></div>
-                        <div class="col-md-6"><label class="labels">Lastname</label><input type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
+                        <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname}></div>
+                        <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
-                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
+                        <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
+                        <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
                     </div>
                     <div class="row mt-3">
                     </div>
