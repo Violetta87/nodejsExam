@@ -1,5 +1,6 @@
 import { Router } from "express";
 const router = Router();
+
 import { createProfileInfo, getProfileInfoByEmail, getLoginIdFromEmail, updateProfile, getProfileById } from "../database/sqlite/crudProfile.js"
 import { errorHandler, handleClientError } from "../middleware/handlingErrors.js";
 
@@ -37,7 +38,7 @@ router.get("/api/profile-info-by-email", errorHandler(async (req,res) =>{
             return handleClientError(res,"unauthorized", 403)
         }
         const info = await getProfileInfoByEmail(req.session.email)
-        
+
         if(info){
             return res.status(200).send({
                 user: info,
@@ -55,7 +56,7 @@ router.put("/api/update-profile/:id", errorHandler(async (req,res) =>{
         const infoProfile = req.body;
         const { firstname, lastname, tlf, address } = infoProfile;
         if(!id && !infoProfile){
-            return handleClientError(res,"Either id or profile Information is missing",400)
+            return handleClientError(res, "Either id or profile Information is missing",400)
         }
         const info = await updateProfile(id, firstname, lastname, tlf, address)
         if(info){
