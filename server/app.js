@@ -56,6 +56,9 @@ import profileRouter from "./routers/profileRouter.js"
 //Seperates which routes needs to authorized before access
 app.use("/api/profile-info", checkAuthorization);
 app.use("/api/profile-info-by-email", checkAuthorization);
+app.use("/api/create-motorcycles",checkAuthorization);
+app.use("/api/update-motorcycle/:id", checkAuthorization);
+app.use("/api/delete-motorcycle/:id", checkAuthorization);
 app.use(profileRouter)
 app.use(motorcycleRouter)
 app.use(loginRouter);

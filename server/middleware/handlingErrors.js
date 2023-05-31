@@ -13,6 +13,14 @@ export function handleClientError(res, message, status){
     });
 }
 
+export function handleClientLoginError(res, user, message, status){
+    res.status(status).send({
+        user: user,
+        message: message,
+        status:status
+    });
+}
+
 export function errorHandler(handler){
     return async (req,res,next) =>{
         try{

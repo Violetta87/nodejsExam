@@ -15,12 +15,12 @@
         method: "POST"
       })
       if(response.status === 200){
-        toastr.success("bye")
+        toastr.success("byeeeee")
         localStorage.removeItem("user")
         user.set(null);
         $user = null;
       }else{
-        
+        toastr.error("Something went wrong. Try again")
       }
     }
 </script>
@@ -67,7 +67,9 @@
 
       <Route path="/login" component={Login}></Route>
       <Route path="/motorcycles" component={Motorcycles}></Route>
-      <Route path="/chat-forum" component={ChatForum}></Route>
+      <PrivateRoute path="/chat-forum">
+        <ChatForum/>
+      </PrivateRoute>
       <PrivateRoute path="/auction">
         <Auction/>
       </PrivateRoute>

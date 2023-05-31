@@ -22,11 +22,18 @@ export async function updateMotorcycle(id, updateData){
     return updatedMotorcycle;
 }
 
+//get by Id
+export async function getMotorcycleById(id){
+    const motorcycleById = await db.motorcycles.findOne(
+        {_id: new ObjectId(id)}
+    );
+    return motorcycleById;
+}
+
 //delete
 export async function deleteMotorcycle(id){
     const deletedMotorcycle = await db.motorcycles.deleteOne(
         {_id: new ObjectId(id)}
     );
-    console.log(deletedMotorcycle, "deletedmotorcycle - db method")
     return deletedMotorcycle
 }

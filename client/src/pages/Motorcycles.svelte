@@ -19,7 +19,7 @@
 
     async function getMCs(){
         try{
-            const response = await fetch($BASE_URL+ "/motorcycles");
+            const response = await fetch($BASE_URL+ "/api/motorcycles");
             const dataResponse = await response.json();
             motorcycles = dataResponse.allMC;
             return motorcycles;
@@ -52,7 +52,7 @@
                 manifacturer,model,year,engine,power,weigth,minimum_price,type
             }
 
-            const response = await fetch($BASE_URL + "/update-motorcycle/" + id, {
+            const response = await fetch($BASE_URL + "/api/update-motorcycle/" + id, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(updateMotorcycle),
@@ -72,7 +72,7 @@
             return
         }
         try{
-            const response = await fetch($BASE_URL + "/delete-motorcycle/" + id, {
+            const response = await fetch($BASE_URL + "/api/delete-motorcycle/" + id, {
                 method: "DELETE"
             });
             if(response.ok){
@@ -95,7 +95,7 @@
       {#if showUpdateForm && motorcycle._id === updatingMotorcycleId}
         <div class="card" style="width: 18rem;">
             <form on:submit|preventDefault={() => handleUpdate(motorcycle._id)}>
-                <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="Card image cap">
+                <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
                 <div class="card-body">
                     <h5 class="card-title">Model:</h5>
                     <input type="text" class="form-control" bind:value={model} required>
@@ -122,7 +122,7 @@
         </div>
         {:else}
       <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="Card image cap">
+          <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
           <div class="card-body">
             <h5 class="card-title">Model: {motorcycle.model}</h5>
             <p class="card-text">Manifacturer: {motorcycle.manifacturer}</p>

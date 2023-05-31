@@ -21,10 +21,9 @@
         body: JSON.stringify({email: email, password: password}),
         credentials: "include"
     });
-    //parser det til javascript object
+    
     const data = await response.json();
-    console.log(data)
-    //status error virker ikke
+    
     if(data.status===404){
       toastr.error("email does not exists.")
     }

@@ -1,14 +1,13 @@
 <script>
     import { afterUpdate, onMount } from 'svelte';
     import { BASE_URL } from '../store/base_url.js';
-    import { user, userN } from '../store/user.js';
+    import { userN } from '../store/user.js';
     import { messages } from '../store/forum.js';
     import io from "socket.io-client";
 
     let socket;
     let newMessage = '';
     let chatForumContainer;
-    let dayAndTime;
 
     function messageDate(){
       const currentDate = new Date();
