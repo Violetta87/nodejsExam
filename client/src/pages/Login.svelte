@@ -314,8 +314,7 @@ async function handleSignup(){
     .signup.active{
       color:#007bff;
     }
-  
-
+    
   </style>
 
 

@@ -8,11 +8,10 @@ dotenv.config();
 
 import { compare } from "bcrypt";
 
-import { bcryptConverter } from "../database/bcrypt.js";
 
 
 //validate user and login, and sends the validated email back.
-router.post("/login", errorHandler(async (req,res) => {
+router.post("/auth/login", errorHandler(async (req,res) => {
     const loginInfo = req.body;
 
     if(!loginInfo.email||!loginInfo.password){
@@ -65,43 +64,6 @@ router.post("/sign-up", errorHandler(async (req,res) => {
         }
 }));
 
-//has be deleted before assignement handed in!!!
-router.get("/login", async (req,res) => {
-    const allUsers = await getAll();
-    res.send({allUsers}) 
-})
-
-//Maybe this needs to be deleted? - am i gonna use it ?!
-router.put("/forgot-password", async (req,res) => {
-    const { email, password } = req.body
-    const userToBeUpdated = await getUserByEmail(email);
-
-    try{
-        if(!userToBeUpdated){
-            return res.status(400).send({
-                user: userToBeUpdated.email,
-                message: "Couldnt find user",
-                status: 400
-            })
-        }
-        if(userToBeUpdated){
-            const hashedPassword = await bcryptConverter(password);
-            await updateUser(userToBeUpdated.id, hashedPassword)
-            return res.status(200).send({
-                user: userToBeUpdated.email,
-                message:"User has been updated",
-                status: 200
-            })
-        }
-    }catch(error){
-        res.status(500).send({
-            message: "internal server error" + error.message,
-            status: 500
-        })
-    }
-
-})
-
 router.delete("/delete/:id", errorHandler(async (req,res) => {
     const userToBeDeleted = req.body
     const findUser = await getUserByEmail(userToBeDeleted.email)
@@ -122,7 +84,7 @@ router.delete("/delete/:id", errorHandler(async (req,res) => {
 }));
 
 
-router.post("/log-out", (req,res) => {
+router.post("/auth/log-out", (req,res) => {
     req.session.destroy(() => {
         res.send({message: "logged out"})
     })

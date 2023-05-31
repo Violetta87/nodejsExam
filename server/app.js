@@ -25,6 +25,24 @@ app.use(session({
     }
 }));
 
+import { rateLimit } from "express-rate-limit";
+
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,//15 min
+    max: 100,//each IP 100 requests per 15 min.
+    standardHeaders: true,
+    legacyHeaders: false,
+})
+
+app.use(apiLimiter);
+
+app.use("/auth", rateLimit({
+    windowMs:15 * 60 * 1000,
+    max:4,
+    standardHeaders: true,
+    legacyHeaders: false,
+}))
+
 //for creating HTTP server
 import http from "http"
 const server = http.createServer(app);
