@@ -2,7 +2,6 @@
     import { Router, Link, Route } from "svelte-navigator"
     import Login from "../pages/Login.svelte";
     import Motorcycles from "../pages/Motorcycles.svelte";
-    import Auction from "../pages/Email.svelte";
     import { BASE_URL } from "../store/base_url";
     import { user } from "../store/user";
     import toastr from "toastr";
@@ -11,7 +10,7 @@
     import ChatForum from "../pages/ChatForum.svelte";
 
     async function logout(){
-      const response = await fetch($BASE_URL + "/log-out", {
+      const response = await fetch($BASE_URL + "/auth/log-out", {
         method: "POST"
       })
       if(response.status === 200){
