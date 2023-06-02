@@ -40,7 +40,8 @@
 
 </script>
 
-<div class="body-container">
+<div class=outer-body-container>
+  <div class="body-container">
     <h1>ChatForum</h1>
     <div class="chat-forum" bind:this={chatForumContainer}>
         {#each $messages as message}
@@ -64,6 +65,9 @@
         </div>
       </div>
 </div>
+</div>
+
+
   
   <style>
 
@@ -83,6 +87,7 @@
       border: 2px solid pink;
       border-radius: 10px;
       overflow-y: auto;
+      background-color: white;
     }
 
     .message-container{

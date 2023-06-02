@@ -8,6 +8,7 @@
     import PrivateRoute from "../privateRoutes/PrivateRoute.svelte";
     import Profile from "../pages/Profile.svelte"
     import ChatForum from "../pages/ChatForum.svelte";
+    import Auction from "../pages/Auction.svelte";
 
     async function logout(){
       const response = await fetch($BASE_URL + "/auth/log-out", {
@@ -49,10 +50,6 @@
                 <a class="nav-link" href="/chat-forum">chat Forum</a>
               </li>
             </ul>
-            <form class="d-flex form-group" role="search">
-              <input class="form-control me-2 search-input" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
             <div class="d-flex login-signup">
               {#if $user}
                 <button class="btn btn-outline-success" on:click={logout}>SignOut</button>
@@ -74,6 +71,9 @@
       </PrivateRoute>
       <PrivateRoute path="/profile">
         <Profile/>
+      </PrivateRoute>
+      <PrivateRoute path="/auction/:id" let:params>
+        <Auction id={params.id}/>
       </PrivateRoute>
 
 </Router>

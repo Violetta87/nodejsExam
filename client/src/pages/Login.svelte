@@ -3,6 +3,7 @@
     import { useNavigate, useLocation } from "svelte-navigator";
     import { user, userN } from "../store/user.js";
     import toastr from "toastr";
+    
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,7 +35,6 @@
         localStorage.setItem("username", JSON.stringify(data.username))
         user.set(data.user);
         userN.set(data.username);
-        console.log(data.username)
         toastr.success(`hiiii ${authenticatedEmail}`);
 
         setTimeout(()=> {
@@ -88,77 +88,79 @@ async function handleSignup(){
 
 
 </script>
-
-<div class="centered-container">
-  <div class="login-form">
-    <div class="container">
-      <div class="header">
-        <h2 class={i===0 ? "login active" : "login"}>Login</h2>
-        <h2 class={i===1 ? "signup active" : "signup"}>Sign Up</h2>
-      </div>
-      <div class="container-range">
-        <div class="range-container">
-          <input class="range" type="range" bind:value={i} max="1">
+<div class="outer-body-container">
+  <div class="centered-container">
+    <div class="login-form">
+      <div class="container">
+        <div class="header">
+          <h2 class={i===0 ? "login active" : "login"}>Login</h2>
+          <h2 class={i===1 ? "signup active" : "signup"}>Sign Up</h2>
         </div>
-      </div>
-      <div class="form-container">
-        {#if i === 0}
-          <!-- Login Form -->
-          <div class="login-container">
-            <form on:submit|preventDefault={validateLogin}>
-              <div class="form-field-form">
-                <div class="form-field">
-                  <label for="email" class="input-text">Email</label>
-                  <input type="text" placeholder="Email" name="email" bind:value={email} required>
-                </div>
-                <div class="form-field">
-                  <label for="password" class="input-text">Password</label>
-                  <input type="password" placeholder="Password" name="password" bind:value={password} required>
-                </div>
-              </div>
-              <div class="button-field">
-                <div class="form-field" id="form-button">
-                  <button type="submit">Login</button>
-                  <div><a href="/">Forgot Password</a></div>
-                </div>
-              </div>
-            </form>
+        <div class="container-range">
+          <div class="range-container">
+            <input class="range" type="range" bind:value={i} max="1">
           </div>
-        {/if}
-        {#if i === 1}
-          <!-- Signup Form -->
-          <div class="signup-container">
-            <form on:submit|preventDefault={handleSignup}>
-              <div class="form-field-form">
-                <div class="form-field">
-                  <label for="username" class="input-text">Username</label>
-                  <input type="text" placeholder="Username" name="username" bind:value={username} required>
+        </div>
+        <div class="form-container">
+          {#if i === 0}
+            <!-- Login Form -->
+            <div class="login-container">
+              <form on:submit|preventDefault={validateLogin}>
+                <div class="form-field-form">
+                  <div class="form-field">
+                    <label for="email" class="input-text">Email</label>
+                    <input type="text" placeholder="Email" name="email" bind:value={email} required>
+                  </div>
+                  <div class="form-field">
+                    <label for="password" class="input-text">Password</label>
+                    <input type="password" placeholder="Password" name="password" bind:value={password} required>
+                  </div>
                 </div>
-                <div class="form-field">
-                  <label for="email" class="input-text">Email</label>
-                  <input type="text" placeholder="Email" name="email" bind:value={email} required>
+                <div class="button-field">
+                  <div class="form-field" id="form-button">
+                    <button type="submit">Login</button>
+                    <div><a href="/">Forgot Password</a></div>
+                  </div>
                 </div>
-                <div class="form-field">
-                  <label for="password" class="input-text">Password</label>
-                  <input type="password" placeholder="Password" name="password" bind:value={password} required>
+              </form>
+            </div>
+          {/if}
+          {#if i === 1}
+            <!-- Signup Form -->
+            <div class="signup-container">
+              <form on:submit|preventDefault={handleSignup}>
+                <div class="form-field-form">
+                  <div class="form-field">
+                    <label for="username" class="input-text">Username</label>
+                    <input type="text" placeholder="Username" name="username" bind:value={username} required>
+                  </div>
+                  <div class="form-field">
+                    <label for="email" class="input-text">Email</label>
+                    <input type="text" placeholder="Email" name="email" bind:value={email} required>
+                  </div>
+                  <div class="form-field">
+                    <label for="password" class="input-text">Password</label>
+                    <input type="password" placeholder="Password" name="password" bind:value={password} required>
+                  </div>
+                  <div class="form-field">
+                    <label for="passwordRepeat" class="input-text">Repeat password</label>
+                    <input type="password" placeholder="Repeat Password" name="passwordRepeat" bind:value={passwordReperat} required>
+                  </div>
                 </div>
-                <div class="form-field">
-                  <label for="passwordRepeat" class="input-text">Repeat password</label>
-                  <input type="password" placeholder="Repeat Password" name="passwordRepeat" bind:value={passwordReperat} required>
+                <div class="button-field">
+                  <div class="form-field">
+                    <button type="submit">Sign Up</button>
+                  </div>
                 </div>
-              </div>
-              <div class="button-field">
-                <div class="form-field">
-                  <button type="submit">Sign Up</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        {/if}
+              </form>
+            </div>
+          {/if}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
   

@@ -2,7 +2,7 @@
     import { user } from "../../store/user.js"
     import { BASE_URL } from "../../store/base_url.js";
 
-    let manifacturer = "";
+    let manufacturer = "";
     let model = "";
     let year = "";
     let engine = "";
@@ -13,10 +13,10 @@
     let owner=$user;
 
     async function handleCreateMc(){
-        const response = await fetch($BASE_URL + "/create-motorcycles", {
+        const response = await fetch($BASE_URL + "/api/create-motorcycles", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({manifacturer: manifacturer, model: model, year: year, engine: engine, power: power, weight: weight, minimum_price: minimum_price, type: type, owner: owner}),
+            body: JSON.stringify({manufacturer: manufacturer, model: model, year: year, engine: engine, power: power, weight: weight, minimum_price: minimum_price, type: type, owner: owner}),
             credentials: "include"
         })
 
@@ -40,20 +40,20 @@
                 </div>
                 <form on:submit|preventDefault={handleCreateMc}>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Manifacturer</label><input type="text" class="form-control" placeholder="suzuku" bind:value={manifacturer} required></div>
-                        <div class="col-md-6"><label class="labels">Model</label><input type="text" class="form-control" placeholder="z750" bind:value={model} required></div>
+                        <div class="col-md-6"><label for="form-control" class="labels">Manufacturer</label><input type="text" class="form-control" placeholder="suzuku" bind:value={manufacturer} required></div>
+                        <div class="col-md-6"><label for="form-control" class="labels">Model</label><input type="text" class="form-control" placeholder="z750" bind:value={model} required></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Year</label><input type="text" class="form-control" placeholder="2023" bind:value={year} required></div>
-                        <div class="col-md-12"><label class="labels">Engine</label><input type="text" class="form-control" placeholder="cc750" bind:value={engine} required></div>
+                        <div class="col-md-12"><label for="form-control" class="labels">Year</label><input type="text" class="form-control" placeholder="2023" bind:value={year} required></div>
+                        <div class="col-md-12"><label for="form-control" class="labels">Engine</label><input type="text" class="form-control" placeholder="cc750" bind:value={engine} required></div>
                     </div>
                     <div class="row mt-3">
-                      <div class="col-md-12"><label class="labels">Power</label><input type="text" class="form-control" placeholder="2023" bind:value={power} required></div>
-                      <div class="col-md-12"><label class="labels">Weight</label><input type="text" class="form-control" placeholder="kg" bind:value={weight} required></div>
+                      <div class="col-md-12"><label for="form-control" class="labels">Power</label><input type="text" class="form-control" placeholder="2023" bind:value={power} required></div>
+                      <div class="col-md-12"><label for="form-control" class="labels">Weight</label><input type="text" class="form-control" placeholder="kg" bind:value={weight} required></div>
                   </div>
                   <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Minimum price</label><input type="number" class="form-control" placeholder="minimum price" bind:value={minimum_price} required></div>
-                    <div class="col-md-12"><label class="labels">Type</label><input type="text" class="form-control" placeholder="cruiser" bind:value={type} required></div>
+                    <div class="col-md-12"><label for="form-control" class="labels">Minimum price</label><input type="number" class="form-control" placeholder="minimum price" bind:value={minimum_price} required></div>
+                    <div class="col-md-12"><label for="form-control" class="labels">Type</label><input type="text" class="form-control" placeholder="cruiser" bind:value={type} required></div>
                   </div>
                     <div class="row mt-3">
                     </div>

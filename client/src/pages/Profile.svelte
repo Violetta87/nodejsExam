@@ -77,6 +77,8 @@
             console.error("Error updating profile information:", error);
             toastr.error("Failed to update profile information: ", error);
         }
+
+        location.reload();
     }
 
     onMount( async() =>{
@@ -85,49 +87,53 @@
    
 </script>
 
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" alt="profile-foto" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"></span><span class="text-black-50">{$user}</span><span> </span></div>
-        </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile</h4>
-                </div>
-                {#if hasProfileInfo !=1}
-                <form on:submit|preventDefault={addProfileInfo}>
-                    <div class="row mt-2">
-                        <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
-                        <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="tel" maxlength="8" minlength="8" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
-                        <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
-                    </div>
-                    <div class="row mt-3">
-                    </div>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
-                </form>
-                {:else}
-                <form on:submit|preventDefault={updateProfileInfo}>
-                    <div class="row mt-2">
-                        <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
-                        <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
-                        <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
-                    </div>
-                    <div class="row mt-3">
-                    </div>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Update Profile</button></div>
-                </form>
-                {/if}
-
+<div class="outer-body-container">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" alt="profile-foto" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"></span><span class="text-black-50">{$user}</span><span> </span></div>
             </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile</h4>
+                    </div>
+                    {#if hasProfileInfo !=1}
+                    <form on:submit|preventDefault={addProfileInfo}>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
+                            <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="tel" maxlength="8" minlength="8" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
+                            <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
+                        </div>
+                        <div class="row mt-3">
+                        </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    </form>
+                    {:else}
+                    <form on:submit|preventDefault={updateProfileInfo}>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label for="firstname-input" class="labels">Firstname</label><input id="firstname-input" type="text" class="form-control" placeholder="firstname" bind:value={firstname} required></div>
+                            <div class="col-md-6"><label for="lastname-input" class="labels">Lastname</label><input id="lastname-input" type="text" class="form-control" placeholder="lastname" bind:value={lastname} required></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label for="tlf-input" class="labels">Mobile Number</label><input id="tlf-input" type="text" class="form-control" placeholder="enter tlf number" bind:value={tlf} required></div>
+                            <div class="col-md-12"><label for="address-input" class="labels">Address</label><input id="address-input" type="text" class="form-control" placeholder="enter address line 1" bind:value={address} required></div>
+                        </div>
+                        <div class="row mt-3">
+                        </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Update Profile</button></div>
+                    </form>
+                    {/if}
+    
+                </div>
+            </div>
+            
         </div>
-        
     </div>
 </div>
+
+
 
