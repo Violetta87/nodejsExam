@@ -145,7 +145,7 @@
                 <p class="card-text">Power: {motorcycle.power}</p>
                 <p class="card-text">Weight: {motorcycle.weight}</p>
                 <p class="card-text">Minimum Price: {motorcycle.minimum_price}</p>
-                <p class="card-text">Owned by: {motorcycle.owner}</p>
+                <p class="card-text">Owned by:<br>{motorcycle.owner}</p>
                 {#if $user === motorcycle.owner}
                     <div class="button-container">
                         <button class="btn btn-primary" type="button" on:click={() => {handleUpdateButtonClick(motorcycle)}}>Update</button>
@@ -168,7 +168,7 @@
     h1{
         margin: 2%;
     }
-    .card-container{
+    .card{
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;

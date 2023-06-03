@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
     import toastr from "toastr";
  
-    export let id;
+    export let id = null;
     let searchQuery = '';
     let motorcycleList = [];
     let bid;
@@ -11,12 +11,12 @@
 
     onMount( async() =>{
         motorcycleList = await getMotorcycles();
-        console.log("halloo")
-        console.log(motorcycleList, "heaaaak")
+        console.log(motorcycleList)
+        motorcycle = motorcycleList.find(motorcycle => motorcycle._id === id);
+        console.log(motorcycle, "motorcycle")
 
         if(id){
-            motorcycle = motorcycleList.find(motorcycle => motorcycle._id === id);
-            console.log(motorcycle, "er der noget her")
+            motorcycle = motorcycleList.find(motorcycle => motorcycle._id === id);  
         }
 
         const unsubscribe = motorcyclesStore.subscribe((value) => {
@@ -34,6 +34,7 @@
         motorcycleList = motorcycleList.filter(motorcycle =>
         motorcycle.manufacturer.toLowerCase().includes(searchQuery.toLowerCase()));
         const count = motorcycleList.length
+        console.log(count)
 
         if(count == 0){
             toastr.success(`Found ${count} motorcycle for sale with that manufacturer: ${motorcycleList.manufacturer}`)
@@ -65,12 +66,11 @@
         </div>
         <br><br>
         <div class="card-container">
-            <div class="card-row">
+            {#if id && motorcycle}
                 <div class="card" style="width: 18rem;">
-                    {#if id}
                     <form on:submit|preventDefault={submitBit}>
-                        <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
                         <div class="card-body">
+                            <img class="card-img-top" src="/src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
                             <h5 class="card-title">{motorcycle.manufacturer}</h5>
                             <p class="card-text">Model: {motorcycle.model}</p>
                             <p class="card-text">owned by: {motorcycle.owner}</p>
@@ -81,25 +81,27 @@
                             </div>
                         </div>
                     </form>
-                    {:else}
-                    {#each motorcycleList as motorcycle}
-                    <form on:submit|preventDefault={submitBit}>
-                        <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
-                        <div class="card-body">
-                            <h5 class="card-title">{motorcycle.manufacturer}</h5>
-                            <p class="card-text">Model: {motorcycle.model}</p>
-                            <p class="card-text">owned by: {motorcycle.owner}</p>
-                            <p class="card-text">minimum_price: {motorcycle.minimum_price}</p>
-                            <input type="price" class="form-control" bind:value={bid} required>
-                            <div class="button-container">
-                                <button class="btn btn-primary" type="submit">submit bid</button>
-                            </div>
-                        </div>
-                    </form>
-                    {/each}
-                    {/if}      
                 </div>
-            </div>
+                {:else}
+                    {#each motorcycleList as motorcycle}
+                    <div class="card" style="width: 18rem;">
+                        <form on:submit|preventDefault={submitBit}>
+                            <img class="card-img-top" src="/src/assets/images/background-pink-bike.jpg" alt="image">
+                            <div class="card-body">
+                                <h5 class="card-title">{motorcycle.manufacturer}</h5>
+                                <p class="card-text">Model: {motorcycle.model}</p>
+                                <p class="card-text">owned by: <br> {motorcycle.owner}</p>
+                                <p class="card-text">minimum_price: {motorcycle.minimum_price}</p>
+                                <input type="price" class="form-control" bind:value={bid} required>
+                                <br>
+                                <div class="button-container">
+                                    <button class="btn btn-primary" type="submit">submit bid</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {/each}
+                {/if}      
         </div>
     </div>  
 </div>
@@ -108,13 +110,9 @@
 
 .card-container{
     display: flex;
-    justify-content: center;
-}
-
-.card-row{
-    display: flex;
     flex-wrap: wrap;
-    gap:20px;
+    justify-content: space-between;
+    margin-bottom: 2%;
 }
 
 </style>

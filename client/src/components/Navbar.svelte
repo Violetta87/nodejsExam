@@ -75,6 +75,5 @@
       <PrivateRoute path="/auction/:id" let:params>
         <Auction id={params.id}/>
       </PrivateRoute>
-
 </Router>
 

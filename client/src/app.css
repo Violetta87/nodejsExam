@@ -1,5 +1,5 @@
 body{
-  background-image: url("/src/assets/images/background-pink-bike.jpg");
+  background-color: aliceblue;
 }
 .navbar-nav {
   display: flex;
