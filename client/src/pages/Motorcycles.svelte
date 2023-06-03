@@ -30,6 +30,7 @@
     })
 
     function handleUpdateButtonClick(motorcycle){
+        console.log(motorcycle)
         showUpdateForm = true;
         updatingMotorcycleId = motorcycle._id;
         manufacturer = motorcycle.manufacturer;
@@ -43,7 +44,9 @@
     }
 
     async function handleUpdate(id){
+        console.log(id, "id i update method")
         try{
+            console.log(id, "id i update method")
             const updateMotorcycle = {
                 manufacturer,model,year,engine,power,weight,minimum_price,type
             }
@@ -60,9 +63,11 @@
                     if(motorcycle._id === id){
                         return {
                             ...updateMotorcycle,
+                            _id: motorcycle._id,
                             owner: motorcycle.owner
                         };
                     }
+                    showUpdateForm=false;
                     return motorcycle;
                 })
             }
