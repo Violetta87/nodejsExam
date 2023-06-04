@@ -1,5 +1,5 @@
-import { writable,readable } from "svelte/store";
-import { BASE_URL } from "./base_url";
+import { writable } from "svelte/store";
+
 
 
 const initialMotorcycles = [];
@@ -7,10 +7,9 @@ const initialMotorcycles = [];
 const url = "http://localhost:3000"
 
 export const motorcyclesStore = writable(initialMotorcycles, () => {
-  // This function will be called when a component subscribes to the store
+  
   return () => {
-    // This cleanup function will be called when the component unsubscribes from the store
-    // You can perform any necessary cleanup here
+    
   };
 });
 
