@@ -11,18 +11,10 @@
 
     onMount( async() =>{
         motorcycleList = await getMotorcycles();
-        console.log(motorcycleList)
-        motorcycle = motorcycleList.find(motorcycle => motorcycle._id === id);
-        console.log(motorcycle, "motorcycle")
 
         if(id){
             motorcycle = motorcycleList.find(motorcycle => motorcycle._id === id);  
         }
-
-        const unsubscribe = motorcyclesStore.subscribe((value) => {
-            motorcycleList = value;
-        });
-        return unsubscribe;
     })
 
     function search(){

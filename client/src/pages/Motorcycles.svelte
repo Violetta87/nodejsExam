@@ -3,7 +3,6 @@
     import { BASE_URL } from "../store/base_url";
     import { user } from "../store/user.js"
     import CreateForm from "../components/motorcycles/CreateForm.svelte";
-    import { motorcyclesStore } from "../store/motorcycleStore";
     import { getMotorcycles } from "../store/motorcycleStore";
     import { navigate } from "svelte-navigator";
     
@@ -22,11 +21,6 @@
 
     onMount(async() => {
         motorcycles = await getMotorcycles();
-
-        const unsubscribe = motorcyclesStore.subscribe(value => {
-            motorcycles=value;
-        });
-        return unsubscribe;
     })
 
     function handleUpdateButtonClick(motorcycle){
@@ -44,9 +38,7 @@
     }
 
     async function handleUpdate(id){
-        console.log(id, "id i update method")
         try{
-            console.log(id, "id i update method")
             const updateMotorcycle = {
                 manufacturer,model,year,engine,power,weight,minimum_price,type
             }
@@ -100,7 +92,6 @@
     }
 
     function goToAuctionPage(motorcycleId){
-        console.log(motorcycleId, "Michael vil id!!!")
         navigate(`/auction/${motorcycleId}`)
     }
 

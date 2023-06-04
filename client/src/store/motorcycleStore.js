@@ -1,17 +1,11 @@
 import { writable } from "svelte/store";
 
-
-
 const initialMotorcycles = [];
 
 const url = "http://localhost:3000"
 
-export const motorcyclesStore = writable(initialMotorcycles, () => {
-  
-  return () => {
-    
-  };
-});
+export let motorcyclesStore;
+let motorcycles;
 
 export async function getMotorcycles(){
     try{
@@ -37,3 +31,10 @@ export async function getMotorcycleById(id){
         console.log(error);
     }
 }
+
+motorcyclesStore = writable(initialMotorcycles, () => {
+    const unsubscribe = motorcyclesStore.subscribe(value => {
+        motorcycles=value;
+    });
+    return unsubscribe;
+});

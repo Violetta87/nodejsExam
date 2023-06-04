@@ -17,14 +17,14 @@
             const profileInfo = await response.json();
 
             if(response.status === 200){
-            firstname = profileInfo.user[0].firstname;
-            lastname = profileInfo.user[0].lastname;
-            tlf = profileInfo.user[0].tlf;
-            address = profileInfo.user[0].address;
-            hasProfileInfo=1;
-            profileId = profileInfo.user[0].id
+                firstname = profileInfo.user[0].firstname;
+                lastname = profileInfo.user[0].lastname;
+                tlf = profileInfo.user[0].tlf;
+                address = profileInfo.user[0].address;
+                hasProfileInfo=1;
+                profileId = profileInfo.user[0].id
             }else{
-            console.log(profileInfo.message);
+                console.log(profileInfo.message);
             }
         }
         catch(error){
@@ -47,10 +47,10 @@
             if(response.status ===200){
                 toastr.success(data.message);
                 setTimeout(()=> {
-                    firstname="";
-                    lastname="";
-                    tlf="";
-                    address="";
+                    firstname = data.firstname,
+                    lastname = data.lastname,
+                    tlf = data.tlf,
+                    address = data.address
                 },1000)
             }  
         }
@@ -71,14 +71,21 @@
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(updatedProfile),
                 credentials: "include"
-            })
+            });
+
+            if(response.ok){
+                toastr.success(`${updatedProfile.firstname} Your account was succesfully updated`)
+                return {
+                    ...updatedProfile,
+                    id: updatedProfile.id
+                }
+            }
+
 
         }catch(error){
             console.error("Error updating profile information:", error);
             toastr.error("Failed to update profile information: ", error);
         }
-
-        location.reload();
     }
 
     onMount( async() =>{

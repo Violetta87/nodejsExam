@@ -1,6 +1,8 @@
 <script>
     import { user } from "../../store/user.js"
     import { BASE_URL } from "../../store/base_url.js";
+    import toastr from "toastr";
+
 
     let manufacturer = "";
     let model = "";
@@ -21,8 +23,17 @@
         })
 
         if(response.ok){
-            location.reload();
+            toastr.success(`${owner} your motorcycle for sale was created succesfully`);
+            manufacturer = "";
+            model= "";
+            year = "";
+            engine = "";
+            power = "";
+            weight= "";
+            minimum_price = "";
+            type = "";
         }
+        location.reload();
     }
 </script>
 
