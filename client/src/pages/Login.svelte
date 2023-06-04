@@ -1,20 +1,19 @@
 <script>
-    import { BASE_URL } from "../store/base_url.js";
-    import { useNavigate, useLocation } from "svelte-navigator";
-    import { user, userN } from "../store/user.js";
-    import toastr from "toastr";
+  import { BASE_URL } from "../store/base_url.js";
+  import { useNavigate } from "svelte-navigator";
+  import { user, userN } from "../store/user.js";
+  import toastr from "toastr";
     
 
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
 
-    let email = "";
-    let password = "";
-    let i = 0;
-    let username= "";
-    let passwordReperat="";
+  let email = "";
+  let password = "";
+  let i = 0;
+  let username= "";
+  let passwordReperat="";
 
-   async function validateLogin(){
+  async function validateLogin(){
     try{
       const response = await fetch($BASE_URL + "/auth/login", {
         method:"POST",
@@ -31,25 +30,21 @@
 
     if(data.status===200){
         const authenticatedEmail = data.user;
-        localStorage.setItem("user", JSON.stringify(data.user))
-        localStorage.setItem("username", JSON.stringify(data.username))
         user.set(data.user);
         userN.set(data.username);
         toastr.success(`hiiii ${authenticatedEmail}`);
 
         setTimeout(()=> {
-            const from = ($location.state && $location.state.from) || "/";
-		    navigate(from, { replace: true });
-        email="";
-        password="";
+		      navigate("/profile");
+          clearForm(); 
         }, 1000);  
-
     }
-  }
+    }
     catch{
       toastr.error("Something went wrong")
     }
-}
+  }
+
 
 
 async function handleSignup(){
@@ -72,18 +67,21 @@ async function handleSignup(){
       toastr.success(data.message);
       setTimeout(() => {
         i=0;
-        username="";
-        email="";
-        password="";
-        passwordReperat="";
+        clearForm();
       },1000)
     }
-
   }
 
   }catch(error){
     console.log(error)
   }
+}
+
+function clearForm(){
+  email="";
+  password="";
+  username="";
+  passwordReperat="";
 }
 
 

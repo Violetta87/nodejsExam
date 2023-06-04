@@ -16,7 +16,7 @@
       })
       if(response.status === 200){
         toastr.success("byeeeee")
-        localStorage.removeItem("user")
+        //localStorage.removeItem("user")
         user.set(null);
         $user = null;
       }else{
@@ -47,7 +47,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/chat-forum">chat Forum</a>
+                <Link to="/chat-forum">Chat forum</Link>
               </li>
             </ul>
             <div class="d-flex login-signup">

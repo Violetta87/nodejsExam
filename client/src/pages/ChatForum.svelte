@@ -25,6 +25,7 @@
     }
 
     onMount(() => {
+      console.log($userN)
         socket = io($BASE_URL);
         socket.on("messagesRecieved",(data) => {
             messages.update(messagesList => {
