@@ -1,7 +1,7 @@
 import Router from "express";
 const router = Router();
 
-import { getUserByEmail, createUser, deleteUser, getAll, updateUser } from "../database/sqlite/crudUser.js"
+import { getUserByEmail, createUser, deleteUser } from "../database/sqlite/crudUser.js"
 import { errorHandler, handleClientError, handleClientLoginError } from "../middleware/handlingErrors.js";
 import dotenv from "dotenv";
 dotenv.config();

@@ -9,8 +9,7 @@ dotenv.config();
 import cors from "cors";
 app.use(cors({
     credentials: true,
-    origin: true,
-    secret: process.env.CORS_KEY
+    origin: true
 }));
 
 import session from "express-session";
@@ -47,7 +46,7 @@ app.use("/auth", rateLimit({
 import http from "http"
 const server = http.createServer(app);
 
-//creates Socker.io instance
+//creates Socket.io instance
 import { Server } from "socket.io"
 const io = new Server(server, {
     cors: {

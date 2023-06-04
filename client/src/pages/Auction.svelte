@@ -1,5 +1,5 @@
 <script>
-    import { motorcyclesStore, getMotorcycles, getMotorcycleById } from "../store/motorcycleStore.js";
+    import { getMotorcycles } from "../store/motorcycleStore.js";
     import { onMount } from "svelte";
     import toastr from "toastr";
  
@@ -18,7 +18,7 @@
     })
 
     function search(){
-        if(searchQuery.trim() === ''){
+        if(searchQuery === ''){
             motorcycleList = [];
             toastr.error("Sorry theres no such motorcycle for sale with that manufacturer.")
         }
@@ -26,16 +26,13 @@
         motorcycleList = motorcycleList.filter(motorcycle =>
         motorcycle.manufacturer.toLowerCase().includes(searchQuery.toLowerCase()));
         const count = motorcycleList.length
-        console.log(count)
-
+        
         if(count == 0){
-            toastr.success(`Found ${count} motorcycle for sale with that manufacturer: ${motorcycleList.manufacturer}`)
-            console.log(motorcycleList)
+            toastr.success(`Found ${count} motorcycle for sale with that manufacturer: ${motorcycleList[0].manufacturer}`)
         }
 
         if(count > 0){
-            toastr.success(`Found ${count} motorcycles for sale with that manufacturer: ${motorcycleList.manufacturer}`)
-            console.log(motorcycleList)
+            toastr.success(`Found ${count} motorcycles for sale with that manufacturer: ${motorcycleList[0].manufacturer}`)
         }
     }
 

@@ -14,7 +14,6 @@ export async function foundMotorcycles(){
 
 //update - virker ikke - alt virker i frontend, 
 export async function updateMotorcycle(id, updateData){
-    console.log(id, "id i update mdthod")
     const updatedMotorcycle = await db.motorcycles.findOneAndUpdate(
         {_id: new ObjectId(id)},
         {$set: updateData},
@@ -25,7 +24,6 @@ export async function updateMotorcycle(id, updateData){
 
 //get by Id
 export async function getMotorcycleById(id){
-    console.log(id, "id i get motorcycle")
     const motorcycleById = await db.motorcycles.findOne(
         {_id: new ObjectId(id)}
     );
@@ -34,7 +32,6 @@ export async function getMotorcycleById(id){
 
 //delete
 export async function deleteMotorcycle(id){
-    console.log(id, "id i deletemotorcycle");
     const deletedMotorcycle = await db.motorcycles.deleteOne(
         {_id: new ObjectId(id)}
     );

@@ -20,7 +20,6 @@ export async function createUser(username, email, password){
 export async function getUserByEmail(email){
     const sql = `SELECT * FROM login WHERE email=?`;
     const result = await db.get(sql, [email]);
-    console.log(result)
     return result;
 }
 
