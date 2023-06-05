@@ -12,7 +12,7 @@ export async function foundMotorcycles(){
     return motorcycles;
 }
 
-//update - virker ikke - alt virker i frontend, 
+//update 
 export async function updateMotorcycle(id, updateData){
     const updatedMotorcycle = await db.motorcycles.findOneAndUpdate(
         {_id: new ObjectId(id)},

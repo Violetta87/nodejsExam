@@ -59,7 +59,7 @@
                 <div class="card" style="width: 18rem;">
                     <form on:submit|preventDefault={submitBit}>
                         <div class="card-body">
-                            <img class="card-img-top" src="/src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
+                            <img class="card-img-top" src="/src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="">
                             <h5 class="card-title">{motorcycle.manufacturer}</h5>
                             <p class="card-text">Model: {motorcycle.model}</p>
                             <p class="card-text">owned by: {motorcycle.owner}</p>
@@ -75,7 +75,7 @@
                     {#each motorcycleList as motorcycle}
                     <div class="card" style="width: 18rem;">
                         <form on:submit|preventDefault={submitBit}>
-                            <img class="card-img-top" src="/src/assets/images/background-pink-bike.jpg" alt="image">
+                            <img class="card-img-top" src="/src/assets/images/background-pink-bike.jpg" alt="">
                             <div class="card-body">
                                 <h5 class="card-title">{motorcycle.manufacturer}</h5>
                                 <p class="card-text">Model: {motorcycle.model}</p>

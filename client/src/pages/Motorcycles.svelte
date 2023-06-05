@@ -105,7 +105,7 @@
           {#if showUpdateForm && motorcycle._id === updatingMotorcycleId}
             <div class="card" style="width: 18rem;">
                 <form on:submit|preventDefault={() => handleUpdate(motorcycle._id)}>
-                    <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
+                    <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Model:</h5>
                         <input type="text" class="form-control" bind:value={model} required>
@@ -132,7 +132,7 @@
             </div>
             {:else}
           <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="image">
+              <img class="card-img-top" src="src/assets/images/2023-softail-standard-010-motorcycle-01.jpg" alt="">
               <div class="card-body">
                 <h5 class="card-title">Model: {motorcycle.model}</h5>
                 <p class="card-text">Manifacturer: {motorcycle.manufacturer}</p>
